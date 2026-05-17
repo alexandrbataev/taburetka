@@ -1,8 +1,5 @@
 {
-  "functions": {
-    "api/oauth.js": {
-      "maxDuration": 10,
-      "memory": 128
-    }
-  }
+  "rewrites": [
+    { "source": "/api/oauth/:path*", "destination": "/api/oauth" }
+  ]
 }
