@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: bataev/taburetka
+  repo: alexandrbataev/taburetka
   branch: main
   base_url: https://oauth-opener.vercel.app
 
