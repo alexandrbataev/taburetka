@@ -1,0 +1,69 @@
+backend:
+  name: github
+  repo: bataev/taburetka
+  branch: main
+  base_url: https://oauth-opener.vercel.app
+
+media_folder: images
+public_folder: /images
+
+collections:
+  - name: settings
+    label: Настройки
+    files:
+      - name: general
+        label: Основные настройки
+        file: content/settings.json
+        fields:
+          - { label: Телефон шапки, name: header_phone, widget: string }
+          - { label: Телефон подвала, name: footer_phone, widget: string }
+          - { label: Email, name: email, widget: string }
+          - { label: Адрес, name: address, widget: string }
+          - { label: График работы, name: schedule, widget: string }
+          - { label: Год в копирайте, name: copyright_year, widget: string }
+
+  - name: hero
+    label: Герой (шапка сайта)
+    files:
+      - name: hero
+        label: Герой
+        file: content/hero.json
+        fields:
+          - { label: Заголовок, name: title, widget: string }
+          - { label: Подзаголовок, name: subtitle, widget: text }
+          - label: Статистика
+            name: stats
+            widget: list
+            fields:
+              - { label: Значение, name: value, widget: string }
+              - { label: Подпись, name: label, widget: string }
+
+  - name: products
+    label: Товары
+    label_singular: Товар
+    folder: content/products
+    create: true
+    format: yml
+    slug: "{{slug}}"
+    fields:
+      - { label: Название, name: title, widget: string }
+      - { label: Категория, name: category, widget: select, options: ["Кухни", "Столы", "Стулья", "Шкафы", "Диваны", "Кровати", "Аксессуары"] }
+      - { label: Описание, name: description, widget: text }
+      - { label: Цена, name: price, widget: string }
+      - { label: Старая цена, name: old_price, widget: string, required: false }
+      - { label: Бейдж, name: badge, widget: select, options: ["", "Хит", "Новинка", "Скидка"], required: false }
+      - { label: Изображение, name: image, widget: image, required: false }
+
+  - name: advantages
+    label: Преимущества
+    files:
+      - name: list
+        label: Список преимуществ
+        file: content/advantages.json
+        fields:
+          - label: Элементы
+            name: items
+            widget: list
+            fields:
+              - { label: Заголовок, name: title, widget: string }
+              - { label: Текст, name: text, widget: text }
