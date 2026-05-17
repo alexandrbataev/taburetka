@@ -23,18 +23,20 @@ module.exports = async (req, res) => {
 
         const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Accept: 'application/json',
+            },
             body: params.toString(),
         });
 
-        const text = await tokenRes.text();
-        const data = Object.fromEntries(new URLSearchParams(text));
+        const data = await tokenRes.json();
         const token = data.access_token;
 
         if (!token) {
             res.statusCode = 400;
             res.setHeader('Content-Type', 'text/plain');
-            return res.end('Token exchange failed, raw: ' + text);
+            return res.end('Token exchange failed: ' + JSON.stringify(data));
         }
 
         const tokenJson = JSON.stringify(token);
