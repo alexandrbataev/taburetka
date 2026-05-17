@@ -4,18 +4,18 @@ const CLIENT_SECRET = process.env.GH_CLIENT_SECRET;
 module.exports = async (req, res) => {
     const host = req.headers['x-forwarded-host'] || req.headers.host;
     const proto = req.headers['x-forwarded-proto'] || 'https';
-    const siteUrl = `${proto}://${host}`;
+    const siteUrl = proto + '://' + host;
     const url = new URL(req.url, siteUrl);
     const path = url.pathname;
 
     if (path.endsWith('/auth')) {
-        const redirectUri = `${siteUrl}/api/oauth/callback`;
+        const redirectUri = siteUrl + '/api/oauth/callback';
         const params = new URLSearchParams({
             client_id: CLIENT_ID,
             redirect_uri: redirectUri,
             scope: 'repo,user',
         });
-        res.writeHead(302, { Location: `https://github.com/login/oauth/authorize?${params}` });
+        res.writeHead(302, { Location: 'https://github.com/login/oauth/authorize?' + params });
         return res.end();
     }
 
@@ -29,10 +29,7 @@ module.exports = async (req, res) => {
         try {
             const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
                 body: JSON.stringify({
                     client_id: CLIENT_ID,
                     client_secret: CLIENT_SECRET,
@@ -49,18 +46,31 @@ module.exports = async (req, res) => {
                 return res.end(JSON.stringify(data));
             }
 
-            res.setHeader('Content-Type', 'text/html');
-            return res.end(`
-                <html><body><script>
-                    (function() {
-                        var authResult = ${JSON.stringify({ token })};
-                        if (window.opener) {
-                            window.opener.postMessage(authResult, '*');
-                            window.close();
-                        }
-                    })();
-                </script></body></html>
-            `);
+            const tokenJson = JSON.stringify(token);
+            const provider = 'github';
+
+            res.setHeader('Content-Type', 'text/html;charset=utf-8');
+            res.end(
+                '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Logging in via GitHub...</title></head><body>' +
+                '<script>' +
+                '(function(){' +
+                'var opener=window.opener;' +
+                'if(!opener)return;' +
+                'var token=' + tokenJson + ';' +
+                'var provider="' + provider + '";' +
+                'var content=JSON.stringify({token:token,provider:provider});' +
+                'function onMsg(e){' +
+                'var o=e.origin==="null"?false:e.origin;' +
+                'if(!o)return;' +
+                'window.removeEventListener("message",onMsg,false);' +
+                'opener.postMessage("authorization:"+provider+":success:"+content,o);' +
+                '}' +
+                'window.addEventListener("message",onMsg,false);' +
+                'opener.postMessage("authorizing:"+provider,"*");' +
+                '})();' +
+                '</script>' +
+                '</body></html>'
+            );
         } catch (err) {
             res.statusCode = 500;
             return res.end('OAuth error: ' + err.message);
