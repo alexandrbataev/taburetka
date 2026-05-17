@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/api/oauth/:path*", "destination": "/api/oauth" }
-  ]
-}
