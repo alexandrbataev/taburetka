@@ -5,7 +5,6 @@ module.exports = async (req, res) => {
     const host = req.headers['x-forwarded-host'] || req.headers.host;
     const proto = req.headers['x-forwarded-proto'] || 'https';
     const siteUrl = proto + '://' + host;
-    const redirectUri = siteUrl + '/api/oauth/callback';
     const url = new URL(req.url, siteUrl);
     const code = url.searchParams.get('code');
 
@@ -19,24 +18,21 @@ module.exports = async (req, res) => {
         params.append('client_id', CLIENT_ID);
         params.append('client_secret', CLIENT_SECRET);
         params.append('code', code);
-        params.append('redirect_uri', redirectUri);
 
         const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                Accept: 'application/json',
-            },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: params.toString(),
         });
 
-        const data = await tokenRes.json();
+        const text = await tokenRes.text();
+        const data = Object.fromEntries(new URLSearchParams(text));
         const token = data.access_token;
 
         if (!token) {
             res.statusCode = 400;
             res.setHeader('Content-Type', 'text/plain');
-            return res.end('Token exchange failed: ' + JSON.stringify(data));
+            return res.end('Token exchange failed, raw: ' + text);
         }
 
         const tokenJson = JSON.stringify(token);
