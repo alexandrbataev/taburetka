@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     const params = new URLSearchParams({
         client_id: CLIENT_ID,
         redirect_uri: redirectUri,
-        scope: 'repo,user',
+        scope: 'repo',
     });
 
     res.writeHead(302, { Location: 'https://github.com/login/oauth/authorize?' + params });
