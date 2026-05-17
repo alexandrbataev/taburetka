@@ -1,15 +1,15 @@
 const CLIENT_ID = process.env.GH_CLIENT_ID;
 const CLIENT_SECRET = process.env.GH_CLIENT_SECRET;
-const SITE_URL = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : 'http://localhost:3000';
 
 module.exports = async (req, res) => {
-    const url = new URL(req.url, SITE_URL);
+    const host = req.headers['x-forwarded-host'] || req.headers.host;
+    const proto = req.headers['x-forwarded-proto'] || 'https';
+    const siteUrl = `${proto}://${host}`;
+    const url = new URL(req.url, siteUrl);
     const path = url.pathname;
 
     if (path.endsWith('/auth')) {
-        const redirectUri = `${SITE_URL}/api/oauth/callback`;
+        const redirectUri = `${siteUrl}/api/oauth/callback`;
         const params = new URLSearchParams({
             client_id: CLIENT_ID,
             redirect_uri: redirectUri,
