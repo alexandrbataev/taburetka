@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/oauth.js": {
+      "runtime": "nodejs@20.x"
+    }
+  }
+}
