@@ -2,7 +2,7 @@ backend:
   name: github
   repo: alexandrbataev/taburetka
   branch: main
-  base_url: https://oauth-opener.vercel.app
+  base_url: https://taburetka.vercel.app/api/oauth
 
 media_folder: images
 public_folder: /images
