@@ -15,15 +15,19 @@ module.exports = async (req, res) => {
     }
 
     try {
+        const params = new URLSearchParams();
+        params.append('client_id', CLIENT_ID);
+        params.append('client_secret', CLIENT_SECRET);
+        params.append('code', code);
+        params.append('redirect_uri', redirectUri);
+
         const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({
-                client_id: CLIENT_ID,
-                client_secret: CLIENT_SECRET,
-                code,
-                redirect_uri: redirectUri,
-            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Accept: 'application/json',
+            },
+            body: params.toString(),
         });
 
         const data = await tokenRes.json();
