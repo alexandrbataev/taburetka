@@ -5,11 +5,11 @@ module.exports = async (req, res) => {
     const host = req.headers['x-forwarded-host'] || req.headers.host;
     const proto = req.headers['x-forwarded-proto'] || 'https';
     const siteUrl = proto + '://' + host;
+    const redirectUri = siteUrl + '/api/oauth/callback';
     const url = new URL(req.url, siteUrl);
     const path = url.pathname;
 
     if (path.endsWith('/auth')) {
-        const redirectUri = siteUrl + '/api/oauth/callback';
         const params = new URLSearchParams({
             client_id: CLIENT_ID,
             redirect_uri: redirectUri,
@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
         const code = url.searchParams.get('code');
         if (!code) {
             res.statusCode = 400;
-            return res.end('Missing code');
+            return res.end('Missing code. URL: ' + req.url + ' Host: ' + host);
         }
 
         try {
@@ -34,6 +34,7 @@ module.exports = async (req, res) => {
                     client_id: CLIENT_ID,
                     client_secret: CLIENT_SECRET,
                     code,
+                    redirect_uri: redirectUri,
                 }),
             });
 
@@ -42,12 +43,19 @@ module.exports = async (req, res) => {
 
             if (!token) {
                 res.statusCode = 400;
-                res.setHeader('Content-Type', 'application/json');
-                return res.end(JSON.stringify(data));
+                res.setHeader('Content-Type', 'text/html');
+                return res.end(
+                    'Token exchange failed. ' +
+                    'siteUrl=' + siteUrl + ' ' +
+                    'redirectUri=' + redirectUri + ' ' +
+                    'req.url=' + req.url + ' ' +
+                    'host=' + host + ' ' +
+                    'x-forwarded-host=' + (req.headers['x-forwarded-host'] || '') + ' ' +
+                    JSON.stringify(data)
+                );
             }
 
             const tokenJson = JSON.stringify(token);
-            const provider = 'github';
 
             res.setHeader('Content-Type', 'text/html;charset=utf-8');
             res.end(
@@ -57,7 +65,7 @@ module.exports = async (req, res) => {
                 'var opener=window.opener;' +
                 'if(!opener)return;' +
                 'var token=' + tokenJson + ';' +
-                'var provider="' + provider + '";' +
+                'var provider="github";' +
                 'var content=JSON.stringify({token:token,provider:provider});' +
                 'function onMsg(e){' +
                 'var o=e.origin==="null"?false:e.origin;' +
@@ -78,5 +86,5 @@ module.exports = async (req, res) => {
     }
 
     res.statusCode = 404;
-    res.end('Not found');
+    res.end('Not found. Path: ' + path);
 };
