@@ -82,46 +82,16 @@ function showNotification(title, text) {
 
 
 
-async function handleFormSubmit(e) {
+function handleFormSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    const name = form.querySelector('#formName').value.trim();
-    const phone = form.querySelector('#formPhone').value.trim();
-    const date = form.querySelector('#formDate').value;
-
-    if (!name || !phone || !date) return;
 
     const submitBtn = form.querySelector('.form__submit');
-    submitBtn.textContent = 'Отправляем...';
-    submitBtn.disabled = true;
 
-    try {
-        const msg = `Новая заявка на замер 📏\nИмя: ${name}\nТелефон: ${phone}\nДата: ${date}`;
-
-        const formData = new FormData();
-        formData.append('chat_id', CHAT_ID);
-        formData.append('text', msg);
-
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: formData
-        });
-
-        showNotification(
-            'Спасибо за заявку!',
-            `${name}, мы получили вашу заявку на замер ${date}. Наш менеджер свяжется с вами в ближайшее время.<br><br>📋 Чек-лист «Что спросить у замерщика»:<br>1. Уточните стоимость доставки<br>2. Спросите про подготовку стен<br>3. Узнайте сроки изготовления<br>4. Обсудите варианты оплаты`
-        );
-        form.reset();
-    } catch {
-        showNotification(
-            'Ошибка',
-            'Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.'
-        );
-    } finally {
-        submitBtn.textContent = 'Записаться на замер';
-        submitBtn.disabled = false;
-    }
+    showNotification(
+        'Запись по телефону',
+        'Позвоните нам по номеру <b>+7 (920) 141-30-56</b>, и мы запишем вас на замер в удобное время.'
+    );
 }
 
 const blogArticles = {
