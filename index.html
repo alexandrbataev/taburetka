@@ -1,451 +1,422 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Табуретка — Мебель для вашего дома</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Табуретка — Мебель для вашего дома</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="header__top">
-            <div class="container header__top-inner">
-                <div class="header__info-links">
-                    <a href="#why-us" class="header__link">О нас</a>
-                    <a href="#works" class="header__link">Примеры работ</a>
-                    <a href="#reviews" class="header__link">Отзывы</a>
-                    <a href="#blog" class="header__link">Блог</a>
-                    <a href="#form-section" class="header__link">Запись на замер</a>
-                    <a href="#contacts" class="header__link">Контакты</a>
-                </div>
-                <div class="header__schedule">
-                    Пн–Вс: 10:00–19:00
-                </div>
-            </div>
-        </div>
-        <div class="header__main">
-            <div class="container header__main-inner">
-                <a href="/" class="header__logo">
-                    <img src="images/logo.jpg" alt="Табуретка" class="header__logo-img" width="44" height="44">
-                </a>
-                <div class="header__contacts">
-                    <a href="tel:+79201413056" class="header__phone">+7 (920) 141-30-56</a>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero__inner">
-                <div class="hero__content">
-                    <h1 class="hero__title">Табуретка — вся мебель для дома</h1>
-                    <p class="hero__subtitle">27 лет в Рыбинске. Закажите бесплатный замер — приедем в удобное время, сделаем проект и рассчитаем точную стоимость.</p>
-                    <div class="hero__buttons">
-                        <a href="#form-section" class="btn btn--primary">Заказать бесплатный замер</a>
-                        <a href="#works" class="btn btn--outline">Наши работы</a>
-                    </div>
-                    <div class="hero__stats">
-                        <div class="hero__stat">
-                            <span class="hero__stat-value">27</span>
-                            <span class="hero__stat-label">лет на рынке</span>
-                        </div>
-                        <div class="hero__stat">
-                            <span class="hero__stat-value">40+</span>
-                            <span class="hero__stat-label">фабрик-партнёров</span>
-                        </div>
-                        <div class="hero__stat">
-                            <span class="hero__stat-value">3</span>
-                            <span class="hero__stat-label">года гарантии</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero__image">
-                    <div class="hero__image-placeholder">
-                        <img src="images/main.jpg" alt="Мебель для вашего дома" class="hero__image-img">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="packages" id="packages">
-        <div class="container">
-            <h2 class="section-title section-title--center">Пакетные решения</h2>
-            <p class="section-subtitle">Готовые комплекты мебели для вашего интерьера — выгодно и продуманно</p>
-            <div class="packages__grid">
-                <div class="package-card">
-                    <div class="package-card__badge">Хит</div>
-                    <h3 class="package-card__title">Студия «под ключ»</h3>
-                    <p class="package-card__price">270 000 ₽</p>
-                    <p class="package-card__desc">Полный комплект мебели для студии до 30 м²</p>
-                    <ul class="package-card__list">
-                        <li>Кухонный гарнитур (3 модуля)</li>
-                        <li>Стол-трансформер</li>
-                        <li>2 стула</li>
-                        <li>Диван-кровать</li>
-                        <li>Шкаф-купе</li>
-                        <li>Кровать с матрасом</li>
-                    </ul>
-                    <button class="btn btn--primary package-card__btn" data-package="studio">Хочу этот комплект</button>
-                </div>
-                <div class="package-card package-card--featured">
-                    <div class="package-card__badge">Выбор недели</div>
-                    <h3 class="package-card__title">Однушка «под ключ»</h3>
-                    <p class="package-card__price">450 000 ₽</p>
-                    <p class="package-card__desc">Полный комплект мебели для однокомнатной квартиры до 45 м²</p>
-                    <ul class="package-card__list">
-                        <li>Кухонный гарнитур (5 модулей)</li>
-                        <li>Обеденный стол на 6 персон</li>
-                        <li>4 стула</li>
-                        <li>Угловой диван</li>
-                        <li>Шкаф-купе 3-дверный</li>
-                        <li>Двуспальная кровать + матрас</li>
-                        <li>Прикроватные тумбы — 2 шт</li>
-                        <li>Светильники — 3 шт</li>
-                    </ul>
-                    <button class="btn btn--primary package-card__btn" data-package="one-room">Хочу этот комплект</button>
-                </div>
-                <div class="package-card">
-                    <div class="package-card__badge">Премиум</div>
-                    <h3 class="package-card__title">Кухня из массива премиум</h3>
-                    <p class="package-card__price">от 200 000 ₽</p>
-                    <p class="package-card__desc">Индивидуальный проект под заказ. Срок изготовления от 30 дней</p>
-                    <ul class="package-card__list">
-                        <li>Массив дуба или ясеня</li>
-                        <li>Индивидуальный дизайн-проект</li>
-                        <li>Столешница из натурального камня</li>
-                        <li>Фурнитура Blum (Австрия)</li>
-                        <li>Доставка и сборка</li>
-                    </ul>
-                    <button class="btn btn--outline package-card__btn" data-package="premium">Узнать подробнее</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="form-section" id="form-section">
-        <div class="container">
-            <div class="form-section__inner">
-                <div class="form-section__info">
-                    <h2 class="form-section__title">Закажите бесплатный замер</h2>
-                    <p class="form-section__text">Приедем в удобное для вас время, сделаем точные замеры, поможем с выбором и рассчитаем стоимость без наценок. Никаких скрытых платежей.</p>
-                    <ul class="form-section__benefits">
-                        <li>Выезд по Рыбинску и району</li>
-                        <li>Дизайн-проект в подарок</li>
-                        <li>Смета в день замера</li>
-                    </ul>
-                </div>
-                <form class="form" id="leadForm">
-                    <div class="form__group">
-                        <label class="form__label" for="formName">Ваше имя</label>
-                        <input type="text" class="form__input" id="formName" name="name" placeholder="Как к вам обращаться?" required>
-                    </div>
-                    <div class="form__group">
-                        <label class="form__label" for="formPhone">Номер телефона</label>
-                        <input type="tel" class="form__input" id="formPhone" name="phone" placeholder="+7 (___) ___-__-__" required>
-                    </div>
-                    <div class="form__group">
-                        <label class="form__label" for="formDate">Желаемая дата замера</label>
-                        <input type="date" class="form__input" id="formDate" name="date" required>
-                    </div>
-                    <button type="submit" class="btn btn--primary form__submit">Записаться на замер</button>
-                    <p class="form__note">Нажимая на кнопку, вы соглашаетесь с политикой обработки персональных данных</p>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <section class="why-us" id="why-us">
-        <div class="container">
-            <h2 class="section-title section-title--center">Почему мы</h2>
-            <p class="section-subtitle">27 лет делаем так, чтобы вы остались довольны</p>
-            <div class="why-us__grid">
-                <div class="why-us__card">
-                    <div class="why-us__icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                            <circle cx="24" cy="24" r="22" fill="#C4A24E" fill-opacity="0.12"/>
-                            <text x="24" y="30" text-anchor="middle" font-size="18" font-weight="700" fill="#C4A24E">27</text>
-                        </svg>
-                    </div>
-                    <h3 class="why-us__title">27 лет опыта</h3>
-                    <p class="why-us__text">Работаем с 1999 года. Знаем о мебели всё и не прячемся за отговорками.</p>
-                </div>
-                <div class="why-us__card">
-                    <div class="why-us__icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                            <circle cx="24" cy="24" r="22" fill="#C4A24E" fill-opacity="0.12"/>
-                            <rect x="12" y="14" width="24" height="20" rx="2" stroke="#C4A24E" stroke-width="2"/>
-                            <line x1="12" y1="20" x2="36" y2="20" stroke="#C4A24E" stroke-width="2"/>
-                            <circle cx="20" cy="28" r="2" fill="#C4A24E"/>
-                            <circle cx="28" cy="28" r="2" fill="#C4A24E"/>
-                        </svg>
-                    </div>
-                    <h3 class="why-us__title">40+ фабрик-партнёров</h3>
-                    <p class="why-us__text">Подберём мебель под любой бюджет — от бюджетных до премиальных брендов.</p>
-                </div>
-                <div class="why-us__card">
-                    <div class="why-us__icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                            <circle cx="24" cy="24" r="22" fill="#C4A24E" fill-opacity="0.12"/>
-                            <path d="M16 28l6 6 10-10" stroke="#C4A24E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M24 12v12l6 4" stroke="#C4A24E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3 class="why-us__title">Штатные сборщики</h3>
-                    <p class="why-us__text">Собираем сами, а не нанимаем сторонних бригад. Отвечаем за каждый стык.</p>
-                </div>
-                <div class="why-us__card">
-                    <div class="why-us__icon">
-                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                            <circle cx="24" cy="24" r="22" fill="#C4A24E" fill-opacity="0.12"/>
-                            <path d="M12 24c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12" stroke="#C4A24E" stroke-width="2" stroke-linecap="round"/>
-                            <polyline points="24,16 24,24 30,27" stroke="#C4A24E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <circle cx="24" cy="24" r="2" fill="#C4A24E"/>
-                        </svg>
-                    </div>
-                    <h3 class="why-us__title">Гарантия до 3 лет</h3>
-                    <p class="why-us__text">Если что-то пошло не так — чиним или меняем без лишних вопросов.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="works" id="works">
-        <div class="container">
-            <h2 class="section-title section-title--center">Наши работы</h2>
-            <p class="section-subtitle">Реальные проекты, которые мы сделали для наших клиентов</p>
-            <div class="works__grid">
-                <div class="work-card">
-                    <div class="work-card__image">
-                        <img src="images/кухня в хрущевке.jpg" alt="Кухня в хрущёвке" class="work-card__img">
-                    </div>
-                    <div class="work-card__info">
-                        <h3 class="work-card__title">Кухня в хрущёвке</h3>
-                        <div class="work-card__meta">
-                            <span class="work-card__meta-item">115 000 ₽</span>
-                            <span class="work-card__meta-divider">|</span>
-                            <span class="work-card__meta-item">10 дней</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <div class="work-card__image">
-                        <img src="images/гостиная в скандинавском стиле.jpg" alt="Гостиная в скандинавском стиле" class="work-card__img">
-                    </div>
-                    <div class="work-card__info">
-                        <h3 class="work-card__title">Гостиная в скандинавском стиле</h3>
-                        <div class="work-card__meta">
-                            <span class="work-card__meta-item">320 000 ₽</span>
-                            <span class="work-card__meta-divider">|</span>
-                            <span class="work-card__meta-item">14 дней</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <div class="work-card__image">
-                        <img src="images/спальня с гардеробной.jpg" alt="Спальня с гардеробной" class="work-card__img">
-                    </div>
-                    <div class="work-card__info">
-                        <h3 class="work-card__title">Спальня с гардеробной</h3>
-                        <div class="work-card__meta">
-                            <span class="work-card__meta-item">280 000 ₽</span>
-                            <span class="work-card__meta-divider">|</span>
-                            <span class="work-card__meta-item">12 дней</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <div class="work-card__image">
-                        <img src="images/кухня из массива дуба.jpg" alt="Кухня из массива дуба" class="work-card__img">
-                    </div>
-                    <div class="work-card__info">
-                        <h3 class="work-card__title">Кухня из массива дуба</h3>
-                        <div class="work-card__meta">
-                            <span class="work-card__meta-item">340 000 ₽</span>
-                            <span class="work-card__meta-divider">|</span>
-                            <span class="work-card__meta-item">35 дней</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <div class="work-card__image">
-                        <img src="images/студия 25м2.jpg" alt="Меблировка студии 25 м²" class="work-card__img">
-                    </div>
-                    <div class="work-card__info">
-                        <h3 class="work-card__title">Меблировка студии 25 м²</h3>
-                        <div class="work-card__meta">
-                            <span class="work-card__meta-item">270 000 ₽</span>
-                            <span class="work-card__meta-divider">|</span>
-                            <span class="work-card__meta-item">10 дней</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <div class="work-card__image">
-                        <img src="images/детская комната.webp" alt="Детская комната" class="work-card__img">
-                    </div>
-                    <div class="work-card__info">
-                        <h3 class="work-card__title">Детская комната</h3>
-                        <div class="work-card__meta">
-                            <span class="work-card__meta-item">130 000 ₽</span>
-                            <span class="work-card__meta-divider">|</span>
-                            <span class="work-card__meta-item">8 дней</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="reviews" id="reviews">
-        <div class="container">
-            <h2 class="section-title section-title--center">Отзывы</h2>
-            <p class="section-subtitle">Посмотрите видеоотзывы наших клиентов</p>
-            <div class="reviews__grid">
-                <div class="review-card">
-                    <div class="review-card__video">
-                        <div class="review-card__placeholder">
-                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-                                <circle cx="30" cy="30" r="28" stroke="#C4A24E" stroke-width="2"/>
-                                <polygon points="24,18 24,42 44,30" fill="#C4A24E"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="review-card__author">Анна К., Рыбинск</p>
-                    <p class="review-card__text">«Заказали кухню и спальню. Всё привезли вовремя, собрали аккуратно. Очень довольны!»</p>
-                </div>
-                <div class="review-card">
-                    <div class="review-card__video">
-                        <div class="review-card__placeholder">
-                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-                                <circle cx="30" cy="30" r="28" stroke="#C4A24E" stroke-width="2"/>
-                                <polygon points="24,18 24,42 44,30" fill="#C4A24E"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="review-card__author">Сергей М., Рыбинск</p>
-                    <p class="review-card__text">«Помогли с дизайн-проектом однушки. Получилось стильно и недорого. Рекомендую!»</p>
-                </div>
-                <div class="review-card">
-                    <div class="review-card__video">
-                        <div class="review-card__placeholder">
-                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-                                <circle cx="30" cy="30" r="28" stroke="#C4A24E" stroke-width="2"/>
-                                <polygon points="24,18 24,42 44,30" fill="#C4A24E"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="review-card__author">Елена П., Рыбинск</p>
-                    <p class="review-card__text">«Кухню из массива делали под заказ — результат превзошёл ожидания. Спасибо команде!»</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="blog" id="blog">
-        <div class="container">
-            <h2 class="section-title section-title--center">Полезные статьи</h2>
-            <p class="section-subtitle">Делимся опытом и секретами</p>
-            <div class="blog__grid">
-                <article class="blog-card">
-                    <div class="blog-card__image">
-                        <img src="images/5 ошибок при мебелеровке студии.jpg" alt="5 ошибок при меблировке студии" class="blog-card__img">
-                    </div>
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">15 апреля 2026</span>
-                        <h3 class="blog-card__title">5 ошибок при меблировке студии</h3>
-                        <p class="blog-card__excerpt">Как не превратить маленькую квартиру в склад мебели. Разбираем частые ошибки и даём рабочие советы.</p>
-                        <button class="blog-card__btn" data-article="1">Читать статью →</button>
-                    </div>
-                </article>
-                <article class="blog-card">
-                    <div class="blog-card__image">
-                        <img src="images/кухня из массива это выгодно.jpeg" alt="Кухня из массива — выгодно на 20 лет" class="blog-card__img">
-                    </div>
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">2 апреля 2026</span>
-                        <h3 class="blog-card__title">Почему кухня из массива — это выгодно на 20 лет</h3>
-                        <p class="blog-card__excerpt">Считаем реальную стоимость владения: массив против МДФ и ЛДСП. Спойлер — массив окупается.</p>
-                        <button class="blog-card__btn" data-article="2">Читать статью →</button>
-                    </div>
-                </article>
-                <article class="blog-card">
-                    <div class="blog-card__image">
-                        <img src="images/как мы соблюдаем сроки производство и логистика.webp" alt="Как мы соблюдаем сроки" class="blog-card__img">
-                    </div>
-                    <div class="blog-card__content">
-                        <span class="blog-card__date">20 марта 2026</span>
-                        <h3 class="blog-card__title">Как мы соблюдаем сроки: производство и логистика</h3>
-                        <p class="blog-card__excerpt">Рассказываем, как устроены наши процессы: от замера до установки. Почему 90% заказов готовы вовремя.</p>
-                        <button class="blog-card__btn" data-article="3">Читать статью →</button>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Модальное окно статьи блога -->
-    <div class="blog-modal" id="blogModal">
-        <div class="blog-modal__overlay" id="blogModalOverlay"></div>
-        <div class="blog-modal__panel">
-            <button class="blog-modal__close" id="blogModalClose">✕</button>
-            <div class="blog-modal__content" id="blogModalContent">
-            </div>
-        </div>
+  <header class="header">
+    <div class="header__top">
+      <div class="container header__top-inner">
+        <nav class="header__info-links">
+          <a href="#why-us" class="header__link">О нас</a>
+          <a href="#works" class="header__link">Примеры работ</a>
+          <a href="#reviews" class="header__link">Отзывы</a>
+          <a href="#blog" class="header__link">Блог</a>
+          <a href="#form-section" class="header__link">Запись на замер</a>
+          <a href="#contacts" class="header__link">Контакты</a>
+        </nav>
+        <div class="header__schedule">Пн–Вс: 10:00–19:00</div>
+      </div>
     </div>
-
-    <footer class="footer" id="contacts">
-        <div class="container">
-            <div class="footer__inner">
-                <div class="footer__about">
-                    <a href="/" class="footer__logo">
-                        <img src="images/logo.jpg" alt="Табуретка" class="footer__logo-img" width="36" height="36">
-                        <span class="footer__logo-text-wrap">
-                            <span class="footer__logo-name">ТАБУРЕТКА</span>
-                            <span class="footer__logo-sub">магазин мебели</span>
-                        </span>
-                    </a>
-                    <p class="footer__desc">Мебельная фабрика. Производим и продаём качественную мебель для вашего дома с 1999 года.</p>
-                    <div class="footer__socials">
-                        <a href="https://vk.com/club177780031" class="footer__social" aria-label="VK" target="_blank" rel="noopener noreferrer">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10.7 14.6c-5.2 0-8.2-3.6-8.3-9.5h2.6c.1 4.4 2 6.2 3.5 6.6V5.1h2.5v3.8c1.5-.2 3-1.8 3.6-3.8h2.5c-.4 2.5-2.1 4.2-3.3 4.8 1.2.5 3.2 2 3.9 4.8h-2.7c-.6-1.9-2-3.4-3.9-3.6v3.6h-.4z"/></svg>
-                        </a>
-                        <a href="#" class="footer__social" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M9.5 2.5a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm3.2 4.8-1.1 5.3c-.1.4-.3.5-.6.3l-1.5-1.1-.7.7c-.2.2-.3.2-.5.1l.2-1.7 3.1-2.8c.1-.1 0-.2-.2-.1l-3.8 2.4-1.6-.5c-.4-.1-.4-.4.1-.6l6.2-2.4c.3-.2.6 0 .4.4z"/></svg>
-                        </a>
-                        <a href="#" class="footer__social" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2.5a7.5 7.5 0 0 0-6.46 11.28l-.64 2.36 2.44-.64A7.5 7.5 0 1 0 10 2.5zm3.54 10.76c-.2.52-.77.96-1.27 1.08-.34.08-.78.14-2.27-.48-1.77-.74-2.91-2.53-3-2.65-.09-.12-.72-.95-.72-1.82 0-.87.46-1.3.62-1.48.16-.18.35-.22.47-.22.12 0 .24 0 .34.01.1.01.24-.04.38.29.14.33.47 1.16.52 1.24.05.08.09.18.03.29-.06.11-.1.18-.19.29-.09.11-.19.24-.27.32-.09.09-.18.19-.08.37.1.18.42.7.9 1.14.62.56 1.14.73 1.3.81.16.08.26.07.36-.04.1-.11.43-.5.55-.67.12-.17.24-.14.4-.08.16.06 1.02.48 1.2.57.17.09.28.13.32.2.04.07.04.42-.16.94z"/></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer__nav">
-                    <h4 class="footer__title">Информация</h4>
-                    <a href="#why-us" class="footer__link">О нас</a>
-                    <a href="#works" class="footer__link">Примеры работ</a>
-                    <a href="#reviews" class="footer__link">Отзывы</a>
-                    <a href="#blog" class="footer__link">Блог</a>
-                    <a href="#form-section" class="footer__link">Запись на замер</a>
-                </div>
-                <div class="footer__contacts">
-                    <h4 class="footer__title">Контакты</h4>
-                    <a href="tel:+79201413056" class="footer__phone">+7 (920) 141-30-56</a>
-                    <a href="mailto:info@taburetka.ru" class="footer__email">info@taburetka.ru</a>
-                    <p class="footer__address">г. Рыбинск, Крестовая улица, 81</p>
-                    <p class="footer__schedule">Пн–Вс: 10:00–19:00</p>
-                </div>
-            </div>
-            <div class="footer__bottom">
-                <p>© 2026 Табуретка. Все права защищены.</p>
-            </div>
+    <div class="header__main">
+      <div class="container header__main-inner">
+        <a href="/" class="header__logo">
+          <img src="images/logo.jpg" alt="Табуретка" class="header__logo-img" width="44" height="44">
+        </a>
+        <div class="header__contacts">
+          <a href="tel:+79201413056" class="header__phone">+7 (920) 141-30-56</a>
         </div>
-    </footer>
+      </div>
+    </div>
+  </header>
 
-    <script src="js/main.js"></script>
+  <section class="hero">
+    <div class="container">
+      <div class="hero__inner">
+        <div class="hero__content">
+          <h1 class="hero__title">Табуретка — вся мебель для дома</h1>
+          <p class="hero__subtitle">27 лет в Рыбинске. Закажите бесплатный замер — приедем в удобное время, сделаем проект и рассчитаем точную стоимость.</p>
+          <div class="hero__buttons">
+            <a href="#form-section" class="btn btn--primary">Заказать бесплатный замер</a>
+            <a href="#works" class="btn btn--outline">Наши работы</a>
+          </div>
+          <div class="hero__stats">
+            <div class="hero__stat">
+              <span class="hero__stat-value">27</span>
+              <span class="hero__stat-label">лет на рынке</span>
+            </div>
+            <div class="hero__stat">
+              <span class="hero__stat-value">40+</span>
+              <span class="hero__stat-label">фабрик-партнёров</span>
+            </div>
+            <div class="hero__stat">
+              <span class="hero__stat-value">3</span>
+              <span class="hero__stat-label">года гарантии</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero__image">
+          <img src="images/main.jpg" alt="Мебель для вашего дома" class="hero__image-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="packages" id="packages">
+    <div class="container">
+      <h2 class="section-title section-title--center">Пакетные решения</h2>
+      <p class="section-subtitle">Готовые комплекты мебели для вашего интерьера — выгодно и продуманно</p>
+      <div class="packages__grid">
+        <div class="package-card">
+          <div class="package-card__badge">Хит</div>
+          <h3 class="package-card__title">Студия «под ключ»</h3>
+          <p class="package-card__price">270 000 ₽</p>
+          <p class="package-card__desc">Полный комплект мебели для студии до 30 м²</p>
+          <ul class="package-card__list">
+            <li>Кухонный гарнитур (3 модуля)</li>
+            <li>Стол-трансформер</li>
+            <li>2 стула</li>
+            <li>Диван-кровать</li>
+            <li>Шкаф-купе</li>
+            <li>Кровать с матрасом</li>
+          </ul>
+          <button class="btn btn--primary package-card__btn" data-package="studio">Хочу этот комплект</button>
+        </div>
+
+        <div class="package-card package-card--featured">
+          <div class="package-card__badge">Выбор недели</div>
+          <h3 class="package-card__title">Однушка «под ключ»</h3>
+          <p class="package-card__price">450 000 ₽</p>
+          <p class="package-card__desc">Полный комплект мебели для однокомнатной квартиры до 45 м²</p>
+          <ul class="package-card__list">
+            <li>Кухонный гарнитур (5 модулей)</li>
+            <li>Обеденный стол на 6 персон</li>
+            <li>4 стула</li>
+            <li>Угловой диван</li>
+            <li>Шкаф-купе 3-дверный</li>
+            <li>Двуспальная кровать + матрас</li>
+            <li>Прикроватные тумбы — 2 шт</li>
+            <li>Светильники — 3 шт</li>
+          </ul>
+          <button class="btn btn--primary package-card__btn" data-package="one-room">Хочу этот комплект</button>
+        </div>
+
+        <div class="package-card">
+          <div class="package-card__badge">Премиум</div>
+          <h3 class="package-card__title">Кухня из массива премиум</h3>
+          <p class="package-card__price">от 200 000 ₽</p>
+          <p class="package-card__desc">Индивидуальный проект под заказ. Срок изготовления от 30 дней</p>
+          <ul class="package-card__list">
+            <li>Массив дуба или ясеня</li>
+            <li>Индивидуальный дизайн-проект</li>
+            <li>Столешница из натурального камня</li>
+            <li>Фурнитура Blum (Австрия)</li>
+            <li>Доставка и сборка</li>
+          </ul>
+          <button class="btn btn--outline package-card__btn" data-package="premium">Узнать подробнее</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-us" id="why-us">
+    <div class="container">
+      <h2 class="section-title section-title--center">Почему мы</h2>
+      <p class="section-subtitle">27 лет делаем так, чтобы вы остались довольны</p>
+      <div class="why-us__grid">
+        <div class="why-us__card">
+          <div class="why-us__icon">
+            <svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="11"/><text x="14" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="var(--accent)" stroke="none">27</text></svg>
+          </div>
+          <h3 class="why-us__title">27 лет опыта</h3>
+          <p class="why-us__text">Работаем с 1999 года. Знаем о мебели всё и не прячемся за отговорками.</p>
+        </div>
+        <div class="why-us__card">
+          <div class="why-us__icon">
+            <svg viewBox="0 0 28 28"><rect x="4" y="7" width="20" height="14" rx="1"/><line x1="4" y1="11" x2="24" y2="11"/></svg>
+          </div>
+          <h3 class="why-us__title">40+ фабрик-партнёров</h3>
+          <p class="why-us__text">Подберём мебель под любой бюджет — от бюджетных до премиальных брендов.</p>
+        </div>
+        <div class="why-us__card">
+          <div class="why-us__icon">
+            <svg viewBox="0 0 28 28"><path d="M8 17l4 4 8-8"/><path d="M14 4v10l5 3"/></svg>
+          </div>
+          <h3 class="why-us__title">Штатные сборщики</h3>
+          <p class="why-us__text">Собираем сами, а не нанимаем сторонних бригад. Отвечаем за каждый стык.</p>
+        </div>
+        <div class="why-us__card">
+          <div class="why-us__icon">
+            <svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="10"/><polyline points="14,8 14,15 19,17"/></svg>
+          </div>
+          <h3 class="why-us__title">Гарантия до 3 лет</h3>
+          <p class="why-us__text">Если что-то пошло не так — чиним или меняем без лишних вопросов.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="works" id="works">
+    <div class="container">
+      <h2 class="section-title section-title--center">Наши работы</h2>
+      <p class="section-subtitle">Реальные проекты, которые мы сделали для наших клиентов</p>
+      <div class="works__grid">
+        <div class="work-card">
+          <div class="work-card__image">
+            <img src="images/кухня в хрущевке.jpg" alt="Кухня в хрущёвке" class="work-card__img" loading="lazy">
+          </div>
+          <div class="work-card__info">
+            <h3 class="work-card__title">Кухня в хрущёвке</h3>
+            <div class="work-card__meta">
+              <span class="work-card__meta-item">115 000 ₽</span>
+              <span class="work-card__meta-item">10 дней</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-card__image">
+            <img src="images/гостиная в скандинавском стиле.jpg" alt="Гостиная в скандинавском стиле" class="work-card__img" loading="lazy">
+          </div>
+          <div class="work-card__info">
+            <h3 class="work-card__title">Гостиная в скандинавском стиле</h3>
+            <div class="work-card__meta">
+              <span class="work-card__meta-item">320 000 ₽</span>
+              <span class="work-card__meta-item">14 дней</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-card__image">
+            <img src="images/спальня с гардеробной.jpg" alt="Спальня с гардеробной" class="work-card__img" loading="lazy">
+          </div>
+          <div class="work-card__info">
+            <h3 class="work-card__title">Спальня с гардеробной</h3>
+            <div class="work-card__meta">
+              <span class="work-card__meta-item">280 000 ₽</span>
+              <span class="work-card__meta-item">12 дней</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-card__image">
+            <img src="images/кухня из массива дуба.jpg" alt="Кухня из массива дуба" class="work-card__img" loading="lazy">
+          </div>
+          <div class="work-card__info">
+            <h3 class="work-card__title">Кухня из массива дуба</h3>
+            <div class="work-card__meta">
+              <span class="work-card__meta-item">340 000 ₽</span>
+              <span class="work-card__meta-item">35 дней</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-card__image">
+            <img src="images/студия 25м2.jpg" alt="Меблировка студии 25 м²" class="work-card__img" loading="lazy">
+          </div>
+          <div class="work-card__info">
+            <h3 class="work-card__title">Меблировка студии 25 м²</h3>
+            <div class="work-card__meta">
+              <span class="work-card__meta-item">270 000 ₽</span>
+              <span class="work-card__meta-item">10 дней</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-card">
+          <div class="work-card__image">
+            <img src="images/детская комната.webp" alt="Детская комната" class="work-card__img" loading="lazy">
+          </div>
+          <div class="work-card__info">
+            <h3 class="work-card__title">Детская комната</h3>
+            <div class="work-card__meta">
+              <span class="work-card__meta-item">130 000 ₽</span>
+              <span class="work-card__meta-item">8 дней</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews" id="reviews">
+    <div class="container">
+      <h2 class="section-title section-title--center">Отзывы</h2>
+      <p class="section-subtitle">Посмотрите видеоотзывы наших клиентов</p>
+      <div class="reviews__grid">
+        <div class="review-card">
+          <div class="review-card__video">
+            <div class="review-card__placeholder">
+              <svg viewBox="0 0 32 32"><polygon points="12,8 12,24 26,16" fill="var(--accent)" stroke="none"/></svg>
+            </div>
+          </div>
+          <p class="review-card__author">Анна К., Рыбинск</p>
+          <p class="review-card__text">«Заказали кухню и спальню. Всё привезли вовремя, собрали аккуратно. Очень довольны!»</p>
+        </div>
+        <div class="review-card">
+          <div class="review-card__video">
+            <div class="review-card__placeholder">
+              <svg viewBox="0 0 32 32"><polygon points="12,8 12,24 26,16" fill="var(--accent)" stroke="none"/></svg>
+            </div>
+          </div>
+          <p class="review-card__author">Сергей М., Рыбинск</p>
+          <p class="review-card__text">«Помогли с дизайн-проектом однушки. Получилось стильно и недорого. Рекомендую!»</p>
+        </div>
+        <div class="review-card">
+          <div class="review-card__video">
+            <div class="review-card__placeholder">
+              <svg viewBox="0 0 32 32"><polygon points="12,8 12,24 26,16" fill="var(--accent)" stroke="none"/></svg>
+            </div>
+          </div>
+          <p class="review-card__author">Елена П., Рыбинск</p>
+          <p class="review-card__text">«Кухню из массива делали под заказ — результат превзошёл ожидания. Спасибо команде!»</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog" id="blog">
+    <div class="container">
+      <h2 class="section-title section-title--center">Полезные статьи</h2>
+      <p class="section-subtitle">Делимся опытом и секретами</p>
+      <div class="blog__grid">
+        <article class="blog-card">
+          <div class="blog-card__image">
+            <img src="images/5 ошибок при мебелеровке студии.jpg" alt="5 ошибок при меблировке студии" class="blog-card__img" loading="lazy">
+          </div>
+          <div class="blog-card__content">
+            <div class="blog-card__date">15 апреля 2026</div>
+            <h3 class="blog-card__title">5 ошибок при меблировке студии</h3>
+            <p class="blog-card__excerpt">Как не превратить маленькую квартиру в склад мебели. Разбираем частые ошибки и даём рабочие советы.</p>
+            <button class="blog-card__btn" data-article="1">Читать статью →</button>
+          </div>
+        </article>
+        <article class="blog-card">
+          <div class="blog-card__image">
+            <img src="images/кухня из массива это выгодно.jpeg" alt="Кухня из массива — выгодно на 20 лет" class="blog-card__img" loading="lazy">
+          </div>
+          <div class="blog-card__content">
+            <div class="blog-card__date">2 апреля 2026</div>
+            <h3 class="blog-card__title">Почему кухня из массива — это выгодно на 20 лет</h3>
+            <p class="blog-card__excerpt">Считаем реальную стоимость владения: массив против МДФ и ЛДСП. Спойлер — массив окупается.</p>
+            <button class="blog-card__btn" data-article="2">Читать статью →</button>
+          </div>
+        </article>
+        <article class="blog-card">
+          <div class="blog-card__image">
+            <img src="images/как мы соблюдаем сроки производство и логистика.webp" alt="Как мы соблюдаем сроки" class="blog-card__img" loading="lazy">
+          </div>
+          <div class="blog-card__content">
+            <div class="blog-card__date">20 марта 2026</div>
+            <h3 class="blog-card__title">Как мы соблюдаем сроки: производство и логистика</h3>
+            <p class="blog-card__excerpt">Рассказываем, как устроены наши процессы: от замера до установки. Почему 90% заказов готовы вовремя.</p>
+            <button class="blog-card__btn" data-article="3">Читать статью →</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="blog-modal" id="blogModal">
+    <div class="blog-modal__overlay" id="blogModalOverlay"></div>
+    <div class="blog-modal__panel">
+      <button class="blog-modal__close" id="blogModalClose">✕</button>
+      <div class="blog-modal__content" id="blogModalContent"></div>
+    </div>
+  </div>
+
+  <section class="form-section" id="form-section">
+    <div class="container">
+      <div class="form-section__inner">
+        <div class="form-section__info">
+          <h2 class="form-section__title">Закажите бесплатный замер</h2>
+          <p class="form-section__text">Приедем в удобное для вас время, сделаем точные замеры, поможем с выбором и рассчитаем стоимость без наценок. Никаких скрытых платежей.</p>
+          <ul class="form-section__benefits">
+            <li>Выезд по Рыбинску и району</li>
+            <li>Дизайн-проект в подарок</li>
+            <li>Смета в день замера</li>
+          </ul>
+        </div>
+        <form class="form" id="leadForm">
+          <div class="form__group">
+            <label class="form__label" for="formName">Ваше имя</label>
+            <input type="text" class="form__input" id="formName" name="name" placeholder="Как к вам обращаться?" required>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="formPhone">Номер телефона</label>
+            <input type="tel" class="form__input" id="formPhone" name="phone" placeholder="+7 (___) ___-__-__" required>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="formDate">Желаемая дата замера</label>
+            <input type="date" class="form__input" id="formDate" name="date" required>
+          </div>
+          <button type="submit" class="btn btn--primary form__submit">Записаться на замер</button>
+          <p class="form__note">Нажимая на кнопку, вы соглашаетесь с политикой обработки персональных данных</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="contacts">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__about">
+          <a href="/" class="footer__logo">
+            <img src="images/logo.jpg" alt="Табуретка" class="footer__logo-img" width="36" height="36">
+            <span class="footer__logo-text-wrap">
+              <span class="footer__logo-name">ТАБУРЕТКА</span>
+              <span class="footer__logo-sub">магазин мебели</span>
+            </span>
+          </a>
+          <p class="footer__desc">Мебельная фабрика. Производим и продаём качественную мебель для вашего дома с 1999 года.</p>
+          <div class="footer__socials">
+            <a href="https://vk.com/club177780031" class="footer__social" aria-label="VK" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 20 20"><path d="M10.7 14.6c-5.2 0-8.2-3.6-8.3-9.5h2.6c.1 4.4 2 6.2 3.5 6.6V5.1h2.5v3.8c1.5-.2 3-1.8 3.6-3.8h2.5c-.4 2.5-2.1 4.2-3.3 4.8 1.2.5 3.2 2 3.9 4.8h-2.7c-.6-1.9-2-3.4-3.9-3.6v3.6h-.4z"/></svg>
+            </a>
+            <a href="#" class="footer__social" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 20 20"><path d="M9.5 2.5a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm3.2 4.8-1.1 5.3c-.1.4-.3.5-.6.3l-1.5-1.1-.7.7c-.2.2-.3.2-.5.1l.2-1.7 3.1-2.8c.1-.1 0-.2-.2-.1l-3.8 2.4-1.6-.5c-.4-.1-.4-.4.1-.6l6.2-2.4c.3-.2.6 0 .4.4z"/></svg>
+            </a>
+            <a href="#" class="footer__social" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 20 20"><path d="M10 2.5a7.5 7.5 0 0 0-6.46 11.28l-.64 2.36 2.44-.64A7.5 7.5 0 1 0 10 2.5zm3.54 10.76c-.2.52-.77.96-1.27 1.08-.34.08-.78.14-2.27-.48-1.77-.74-2.91-2.53-3-2.65-.09-.12-.72-.95-.72-1.82 0-.87.46-1.3.62-1.48.16-.18.35-.22.47-.22.12 0 .24 0 .34.01.1.01.24-.04.38.29.14.33.47 1.16.52 1.24.05.08.09.18.03.29-.06.11-.1.18-.19.29-.09.11-.19.24-.27.32-.09.09-.18.19-.08.37.1.18.42.7.9 1.14.62.56 1.14.73 1.3.81.16.08.26.07.36-.04.1-.11.43-.5.55-.67.12-.17.24-.14.4-.08.16.06 1.02.48 1.2.57.17.09.28.13.32.2.04.07.04.42-.16.94z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__nav">
+          <h4 class="footer__title">Информация</h4>
+          <a href="#why-us" class="footer__link">О нас</a>
+          <a href="#works" class="footer__link">Примеры работ</a>
+          <a href="#reviews" class="footer__link">Отзывы</a>
+          <a href="#blog" class="footer__link">Блог</a>
+          <a href="#form-section" class="footer__link">Запись на замер</a>
+        </div>
+
+        <div class="footer__contacts">
+          <h4 class="footer__title">Контакты</h4>
+          <a href="tel:+79201413056" class="footer__phone">+7 (920) 141-30-56</a>
+          <a href="mailto:info@taburetka.ru" class="footer__email">info@taburetka.ru</a>
+          <p class="footer__address">г. Рыбинск, Крестовая улица, 81</p>
+          <p class="footer__schedule">Пн–Вс: 10:00–19:00</p>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 Табуретка. Все права защищены.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="notification" id="notification">
+    <button class="notification__close" id="notificationClose" aria-label="Закрыть">✕</button>
+    <div class="notification__title" id="notificationTitle"></div>
+    <div class="notification__text" id="notificationText"></div>
+  </div>
+
+  <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,257 +1,162 @@
+function showNotification(title, text) {
+  var notif = document.getElementById('notification');
+  var notifTitle = document.getElementById('notificationTitle');
+  var notifText = document.getElementById('notificationText');
+  var notifClose = document.getElementById('notificationClose');
+  if (!notif) return;
+
+  if (notifTitle) notifTitle.textContent = title;
+  if (notifText) notifText.innerHTML = text;
+  notif.classList.add('show');
+
+  if (window._notifTimer) clearTimeout(window._notifTimer);
+  window._notifTimer = setTimeout(function () {
+    notif.classList.remove('show');
+  }, 8000);
+
+  if (notifClose) {
+    notifClose.onclick = function () {
+      notif.classList.remove('show');
+      if (window._notifTimer) clearTimeout(window._notifTimer);
+    };
+  }
+}
+
 async function loadContent(url) {
-    try {
-        const res = await fetch(url);
-        if (!res.ok) return null;
-        return await res.json();
-    } catch {
-        return null;
-    }
+  try {
+    var res = await fetch(url);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (e) {
+    return null;
+  }
 }
 
 async function applySettings() {
-    const settings = await loadContent('/content/settings.json');
-    if (!settings) return;
-    if (settings.header_phone) {
-        document.querySelector('.header__phone').textContent = settings.header_phone;
-        document.querySelector('.header__phone').href = 'tel:' + settings.header_phone.replace(/[^+\d]/g, '');
-    }
-    if (settings.footer_phone) {
-        document.querySelector('.footer__phone').textContent = settings.footer_phone;
-        document.querySelector('.footer__phone').href = 'tel:' + settings.footer_phone.replace(/[^+\d]/g, '');
-    }
-    if (settings.email) {
-        document.querySelector('.footer__email').textContent = settings.email;
-        document.querySelector('.footer__email').href = 'mailto:' + settings.email;
-    }
-    if (settings.address) document.querySelector('.footer__address').textContent = settings.address;
-    document.querySelectorAll('.header__schedule, .footer__schedule').forEach(el => {
-        if (settings.schedule) el.textContent = settings.schedule;
-    });
-    if (settings.copyright_year) {
-        document.querySelector('.footer__bottom p').textContent = `© ${settings.copyright_year} Табуретка. Все права защищены.`;
-    }
+  var settings = await loadContent('/content/settings.json');
+  if (!settings) return;
+  if (settings.header_phone) {
+    var hp = document.querySelector('.header__phone');
+    if (hp) { hp.textContent = settings.header_phone; hp.href = 'tel:' + settings.header_phone.replace(/[^+\d]/g, ''); }
+  }
+  if (settings.footer_phone) {
+    var fp = document.querySelector('.footer__phone');
+    if (fp) { fp.textContent = settings.footer_phone; fp.href = 'tel:' + settings.footer_phone.replace(/[^+\d]/g, ''); }
+  }
+  if (settings.email) {
+    var fe = document.querySelector('.footer__email');
+    if (fe) { fe.textContent = settings.email; fe.href = 'mailto:' + settings.email; }
+  }
+  if (settings.address) {
+    var fa = document.querySelector('.footer__address');
+    if (fa) fa.textContent = settings.address;
+  }
+  if (settings.schedule) {
+    document.querySelectorAll('.header__schedule, .footer__schedule').forEach(function (el) { el.textContent = settings.schedule; });
+  }
+  if (settings.copyright_year) {
+    var fb = document.querySelector('.footer__bottom p');
+    if (fb) fb.textContent = '\u00A9 ' + settings.copyright_year + ' \u0422\u0430\u0431\u0443\u0440\u0435\u0442\u043A\u0430. \u0412\u0441\u0435 \u043F\u0440\u0430\u0432\u0430 \u0437\u0430\u0449\u0438\u0449\u0435\u043D\u044B.';
+  }
 }
 
 async function applyHero() {
-    const hero = await loadContent('/content/hero.json');
-    if (!hero) return;
-    if (hero.title) document.querySelector('.hero__title').innerHTML = hero.title.replace(/\n/g, '<br>');
-    if (hero.subtitle) document.querySelector('.hero__subtitle').textContent = hero.subtitle;
-    if (hero.stats) {
-        const statsContainer = document.querySelector('.hero__stats');
-        if (statsContainer) {
-            statsContainer.innerHTML = hero.stats.map(s => `
-                <div class="hero__stat">
-                    <span class="hero__stat-value">${s.value}</span>
-                    <span class="hero__stat-label">${s.label}</span>
-                </div>
-            `).join('');
-        }
+  var hero = await loadContent('/content/hero.json');
+  if (!hero) return;
+  if (hero.title) {
+    var ht = document.querySelector('.hero__title');
+    if (ht) ht.innerHTML = hero.title.replace(/\n/g, '<br>');
+  }
+  if (hero.subtitle) {
+    var hs = document.querySelector('.hero__subtitle');
+    if (hs) hs.textContent = hero.subtitle;
+  }
+  if (hero.stats) {
+    var statsContainer = document.querySelector('.hero__stats');
+    if (statsContainer) {
+      statsContainer.innerHTML = hero.stats.map(function (s) {
+        return '<div class="hero__stat"><span class="hero__stat-value">' + s.value + '</span><span class="hero__stat-label">' + s.label + '</span></div>';
+      }).join('');
     }
+  }
 }
 
-function showNotification(title, text) {
-    const existing = document.querySelector('.notification');
-    if (existing) existing.remove();
-
-    const notif = document.createElement('div');
-    notif.className = 'notification';
-    notif.innerHTML = `
-        <button class="notification__close" aria-label="Закрыть">✕</button>
-        <div class="notification__title">${title}</div>
-        <div class="notification__text">${text}</div>
-    `;
-    document.body.appendChild(notif);
-
-    requestAnimationFrame(() => {
-        notif.classList.add('show');
-    });
-
-    notif.querySelector('.notification__close').addEventListener('click', () => {
-        notif.classList.remove('show');
-        setTimeout(() => notif.remove(), 400);
-    });
-
-    setTimeout(() => {
-        if (notif.parentNode) {
-            notif.classList.remove('show');
-            setTimeout(() => notif.remove(), 400);
-        }
-    }, 8000);
-}
-
-
-
-function handleFormSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-
-    const submitBtn = form.querySelector('.form__submit');
-
-    showNotification(
-        'Запись по телефону',
-        'Позвоните нам по номеру <b>+7 (920) 141-30-56</b>, и мы запишем вас на замер в удобное время.'
-    );
-}
-
-const blogArticles = {
-    1: {
-        title: '5 ошибок при меблировке студии',
-        date: '15 апреля 2026',
-        content: `
-            <p>Обустройство студии — задача посложнее, чем меблировка обычной квартиры. Здесь каждый квадратный метр на счету, и одна неверная покупка может превратить уютное пространство в захламлённую клетушку. Разберём пять самых частых ошибок.</p>
-
-            <h3>1. Покупка громоздкой мебели</h3>
-            <p>Соблазн поставить полноценный диван и огромный шкаф велик, но в студии такой подход крадёт 30% полезной площади. Выход: трансформеры, откидные кровати, модульные системы. Современный рынок предлагает десятки вариантов, которые днём компактны, а ночью превращаются в полноценное спальное место.</p>
-
-            <h3>2. Отсутствие зонирования</h3>
-            <p>Студия — это одна комната, выполняющая роль гостиной, спальни и кухни одновременно. Без чёткого зонирования пространство выглядит хаотичным. Используйте стеллажи, раздвижные перегородки, разные покрытия пола и освещение для разделения зон.</p>
-
-            <h3>3. Экономия на хранении</h3>
-            <p>В студии критически важна каждая система хранения. Недостаток шкафов и полок быстро приводит к тому, что вещи начинают лежать на виду, создавая визуальный шум. Продумайте системы хранения на этапе планирования — встроенные шкафы, ниши, кровати с ящиками.</p>
-
-            <h3>4. Неправильное освещение</h3>
-            <p>Одна люстра по центру потолка — худшее решение для студии. Нужна многоуровневая система: общий свет, локальный (торшеры, бра) и рабочая подсветка кухонной зоны. Это не только функционально, но и визуально расширяет пространство.</p>
-
-            <h3>5. Игнорирование вертикального пространства</h3>
-            <p>Полки под потолком, высокие шкафы, настенные крючки — используйте стены. Это освободит пол и создаст ощущение простора.</p>
-
-            <p>Хотите избежать этих ошибок? Закажите бесплатный замер — наш дизайнер приедет, сделает проект студии с учётом всех нюансов и подберёт мебель, которая действительно подходит.</p>
-        `
-    },
-    2: {
-        title: 'Почему кухня из массива — это выгодно на 20 лет',
-        date: '2 апреля 2026',
-        content: `
-            <p>Многие считают, что кухня из натурального дерева — это дорого и неоправданно. Давайте посчитаем реальную стоимость владения и разберёмся, почему массив окупается с лихвой.</p>
-
-            <h3>Срок службы</h3>
-            <p>Кухня из МДФ или ЛДСП служит в среднем 5–8 лет. После этого фасады теряют вид, кромка отклеивается, плита разбухает от влаги. Кухня из массива дуба или ясеня служит 20–30 лет без потери внешнего вида. При бережном уходе — ещё дольше.</p>
-
-            <h3>Ремонтопригодность</h3>
-            <p>Массив можно реставрировать: отшлифовать, затонировать, покрыть новым лаком. МДФ и ЛДСП ремонту не подлежат — только замена фасадов целиком. Через 10 лет вы просто обновите массивную кухню, а не купите новую.</p>
-
-            <h3>Экологичность</h3>
-            <p>Натуральное дерево — это безопасно. Никаких формальдегидных смол, никаких испарений. Для семьи с детьми это принципиальный момент.</p>
-
-            <h3>Престиж и стоимость жилья</h3>
-            <p>Кухня из массива — это инвестиция в стоимость квартиры. При продаже такая кухня станет весомым аргументом и повысит цену объекта.</p>
-
-            <h3>Сравнение за 20 лет</h3>
-            <p>Кухня из МДФ среднего сегмента: 150 000 ₽ × 3 замены = 450 000 ₽. Кухня из массива премиум: 350 000 ₽ × 1 раз = 350 000 ₽. Экономия очевидна, а с учётом удовольствия от использования — выбор в пользу массива становится ещё убедительнее.</p>
-
-            <p>В нашей мастерской мы делаем кухни из массива дуба и ясеня под заказ. Индивидуальный проект, австрийская фурнитура, натуральный камень. Срок изготовления — от 30 дней.</p>
-        `
-    },
-    3: {
-        title: 'Как мы соблюдаем сроки: производство и логистика',
-        date: '20 марта 2026',
-        content: `
-            <p>«Мебель сделают через месяц» — фраза, которая часто звучит как приговор. В нашей практике 90% заказов готовы точно в срок. Рассказываем, как нам это удаётся.</p>
-
-            <h3>Этап 1: Замер и проект</h3>
-            <p>После заявки выезжаем на объект в течение 2 дней. Замерщик не просто снимает размеры, а сразу консультирует по планировке. Через 1–2 дня готов дизайн-проект и смета. Никаких «подумаем неделю» — решения принимаем быстро.</p>
-
-            <h3>Этап 2: Подтверждение и запуск</h3>
-            <p>После утверждения проекта заявка уходит в производство. Все материалы проверены и зарезервированы заранее (наши партнёры — 40+ фабрик, с которыми мы работаем годами). Это исключает ситуацию «нужного материала нет на складе».</p>
-
-            <h3>Этап 3: Производство</h3>
-            <p>Собственное производство позволяет контролировать каждый этап. Распил, кромление, сборка — всё идёт по графику. Каждую неделю клиент получает фотоотчёт о ходе работ.</p>
-
-            <h3>Этап 4: Доставка и сборка</h3>
-            <p>Доставку планируем так, чтобы не было простоев. Штатные сборщики (не наёмные бригады) приезжают строго по графику. В день сборки мастер проверяет всю фурнитуру и комплектацию.</p>
-
-            <h3>Почему это работает</h3>
-            <p>Система: прозрачные сроки, регулярные отчёты, личная ответственность мастера. Если мы видим, что срок сдвигается (что бывает редко), предупреждаем клиента минимум за неделю и предлагаем варианты компенсации.</p>
-
-            <p>Хотите мебель без нервотрёпки? Запишитесь на замер, и мы покажем, как должно работать.</p>
-        `
-    }
+var blogArticles = {
+  1: {
+    title: '5 \u043E\u0448\u0438\u0431\u043E\u043A \u043F\u0440\u0438 \u043C\u0435\u0431\u043B\u0438\u0440\u043E\u0432\u043A\u0435 \u0441\u0442\u0443\u0434\u0438\u0438',
+    date: '15 \u0430\u043F\u0440\u0435\u043B\u044F 2026',
+    content: '<p>\u041E\u0431\u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u043E \u0441\u0442\u0443\u0434\u0438\u0438 \u2014 \u0437\u0430\u0434\u0430\u0447\u0430 \u043F\u043E\u0441\u043B\u043E\u0436\u043D\u0435\u0435, \u0447\u0435\u043C \u043C\u0435\u0431\u043B\u0438\u0440\u043E\u0432\u043A\u0430 \u043E\u0431\u044B\u0447\u043D\u043E\u0439 \u043A\u0432\u0430\u0440\u0442\u0438\u0440\u044B. \u0417\u0434\u0435\u0441\u044C \u043A\u0430\u0436\u0434\u044B\u0439 \u043A\u0432\u0430\u0434\u0440\u0430\u0442\u043D\u044B\u0439 \u043C\u0435\u0442\u0440 \u043D\u0430 \u0441\u0447\u0435\u0442\u0443, \u0438 \u043E\u0434\u043D\u0430 \u043D\u0435\u0432\u0435\u0440\u043D\u0430\u044F \u043F\u043E\u043A\u0443\u043F\u043A\u0430 \u043C\u043E\u0436\u0435\u0442 \u043F\u0440\u0435\u0432\u0440\u0430\u0442\u0438\u0442\u044C \u0443\u044E\u0442\u043D\u043E\u0435 \u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u043E \u0432 \u0437\u0430\u0445\u043B\u0430\u043C\u043B\u0451\u043D\u043D\u0443\u044E \u043A\u043B\u0435\u0442\u0443\u0448\u043A\u0443. \u0420\u0430\u0437\u0431\u0435\u0440\u0451\u043C \u043F\u044F\u0442\u044C \u0441\u0430\u043C\u044B\u0445 \u0447\u0430\u0441\u0442\u044B\u0445 \u043E\u0448\u0438\u0431\u043E\u043A.</p><h3>1. \u041F\u043E\u043A\u0443\u043F\u043A\u0430 \u0433\u0440\u043E\u043C\u043E\u0437\u0434\u043A\u043E\u0439 \u043C\u0435\u0431\u0435\u043B\u0438</h3><p>\u0421\u043E\u0431\u043B\u0430\u0437\u043D \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043F\u043E\u043B\u043D\u043E\u0446\u0435\u043D\u043D\u044B\u0439 \u0434\u0438\u0432\u0430\u043D \u0438 \u043E\u0433\u0440\u043E\u043C\u043D\u044B\u0439 \u0448\u043A\u0430\u0444 \u0432\u0435\u043B\u0438\u043A, \u043D\u043E \u0432 \u0441\u0442\u0443\u0434\u0438\u0438 \u0442\u0430\u043A\u043E\u0439 \u043F\u043E\u0434\u0445\u043E\u0434 \u043A\u0440\u0430\u0434\u0451\u0442 30% \u043F\u043E\u043B\u0435\u0437\u043D\u043E\u0439 \u043F\u043B\u043E\u0449\u0430\u0434\u0438. \u0412\u044B\u0445\u043E\u0434: \u0442\u0440\u0430\u043D\u0441\u0444\u043E\u0440\u043C\u0435\u0440\u044B, \u043E\u0442\u043A\u0438\u0434\u043D\u044B\u0435 \u043A\u0440\u043E\u0432\u0430\u0442\u0438, \u043C\u043E\u0434\u0443\u043B\u044C\u043D\u044B\u0435 \u0441\u0438\u0441\u0442\u0435\u043C\u044B.</p><h3>2. \u041E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435 \u0437\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F</h3><p>\u0421\u0442\u0443\u0434\u0438\u044F \u2014 \u044D\u0442\u043E \u043E\u0434\u043D\u0430 \u043A\u043E\u043C\u043D\u0430\u0442\u0430, \u0432\u044B\u043F\u043E\u043B\u043D\u044F\u044E\u0449\u0430\u044F \u0440\u043E\u043B\u044C \u0433\u043E\u0441\u0442\u0438\u043D\u043E\u0439, \u0441\u043F\u0430\u043B\u044C\u043D\u0438 \u0438 \u043A\u0443\u0445\u043D\u0438 \u043E\u0434\u043D\u043E\u0432\u0440\u0435\u043C\u0435\u043D\u043D\u043E. \u0411\u0435\u0437 \u0447\u0451\u0442\u043A\u043E\u0433\u043E \u0437\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u043E \u0432\u044B\u0433\u043B\u044F\u0434\u0438\u0442 \u0445\u0430\u043E\u0442\u0438\u0447\u043D\u044B\u043C. \u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0441\u0442\u0435\u043B\u043B\u0430\u0436\u0438, \u0440\u0430\u0437\u0434\u0432\u0438\u0436\u043D\u044B\u0435 \u043F\u0435\u0440\u0435\u0433\u043E\u0440\u043E\u0434\u043A\u0438, \u0440\u0430\u0437\u043D\u044B\u0435 \u043F\u043E\u043A\u0440\u044B\u0442\u0438\u044F \u043F\u043E\u043B\u0430 \u0438 \u043E\u0441\u0432\u0435\u0449\u0435\u043D\u0438\u0435.</p><h3>3. \u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u043D\u0430 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0438</h3><p>\u0412 \u0441\u0442\u0443\u0434\u0438\u0438 \u043A\u0440\u0438\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u0432\u0430\u0436\u043D\u0430 \u043A\u0430\u0436\u0434\u0430\u044F \u0441\u0438\u0441\u0442\u0435\u043C\u0430 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F. \u041D\u0435\u0434\u043E\u0441\u0442\u0430\u0442\u043E\u043A \u0448\u043A\u0430\u0444\u043E\u0432 \u0438 \u043F\u043E\u043B\u043E\u043A \u0431\u044B\u0441\u0442\u0440\u043E \u043F\u0440\u0438\u0432\u043E\u0434\u0438\u0442 \u043A \u0442\u043E\u043C\u0443, \u0447\u0442\u043E \u0432\u0435\u0449\u0438 \u043D\u0430\u0447\u0438\u043D\u0430\u044E\u0442 \u043B\u0435\u0436\u0430\u0442\u044C \u043D\u0430 \u0432\u0438\u0434\u0443, \u0441\u043E\u0437\u0434\u0430\u0432\u0430\u044F \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0439 \u0448\u0443\u043C.</p><h3>4. \u041D\u0435\u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u043E\u0435 \u043E\u0441\u0432\u0435\u0449\u0435\u043D\u0438\u0435</h3><p>\u041E\u0434\u043D\u0430 \u043B\u044E\u0441\u0442\u0440\u0430 \u043F\u043E \u0446\u0435\u043D\u0442\u0440\u0443 \u043F\u043E\u0442\u043E\u043B\u043A\u0430 \u2014 \u0445\u0443\u0434\u0448\u0435\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u0434\u043B\u044F \u0441\u0442\u0443\u0434\u0438\u0438. \u041D\u0443\u0436\u043D\u0430 \u043C\u043D\u043E\u0433\u043E\u0443\u0440\u043E\u0432\u043D\u0435\u0432\u0430\u044F \u0441\u0438\u0441\u0442\u0435\u043C\u0430: \u043E\u0431\u0449\u0438\u0439 \u0441\u0432\u0435\u0442, \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u044B\u0439 (\u0442\u043E\u0440\u0448\u0435\u0440\u044B, \u0431\u0440\u0430) \u0438 \u0440\u0430\u0431\u043E\u0447\u0430\u044F \u043F\u043E\u0434\u0441\u0432\u0435\u0442\u043A\u0430 \u043A\u0443\u0445\u043E\u043D\u043D\u043E\u0439 \u0437\u043E\u043D\u044B.</p><h3>5. \u0418\u0433\u043D\u043E\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0432\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u0430</h3><p>\u041F\u043E\u043B\u043A\u0438 \u043F\u043E\u0434 \u043F\u043E\u0442\u043E\u043B\u043A\u043E\u043C, \u0432\u044B\u0441\u043E\u043A\u0438\u0435 \u0448\u043A\u0430\u0444\u044B, \u043D\u0430\u0441\u0442\u0435\u043D\u043D\u044B\u0435 \u043A\u0440\u044E\u0447\u043A\u0438 \u2014 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0439\u0442\u0435 \u0441\u0442\u0435\u043D\u044B. \u042D\u0442\u043E \u043E\u0441\u0432\u043E\u0431\u043E\u0434\u0438\u0442 \u043F\u043E\u043B \u0438 \u0441\u043E\u0437\u0434\u0430\u0441\u0442 \u043E\u0449\u0443\u0449\u0435\u043D\u0438\u0435 \u043F\u0440\u043E\u0441\u0442\u043E\u0440\u0430.</p><p>\u0425\u043E\u0442\u0438\u0442\u0435 \u0438\u0437\u0431\u0435\u0436\u0430\u0442\u044C \u044D\u0442\u0438\u0445 \u043E\u0448\u0438\u0431\u043E\u043A? \u0417\u0430\u043A\u0430\u0436\u0438\u0442\u0435 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0439 \u0437\u0430\u043C\u0435\u0440 \u2014 \u043D\u0430\u0448 \u0434\u0438\u0437\u0430\u0439\u043D\u0435\u0440 \u043F\u0440\u0438\u0435\u0434\u0435\u0442, \u0441\u0434\u0435\u043B\u0430\u0435\u0442 \u043F\u0440\u043E\u0435\u043A\u0442 \u0441\u0442\u0443\u0434\u0438\u0438 \u0441 \u0443\u0447\u0451\u0442\u043E\u043C \u0432\u0441\u0435\u0445 \u043D\u044E\u0430\u043D\u0441\u043E\u0432 \u0438 \u043F\u043E\u0434\u0431\u0435\u0440\u0451\u0442 \u043C\u0435\u0431\u0435\u043B\u044C, \u043A\u043E\u0442\u043E\u0440\u0430\u044F \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u043F\u043E\u0434\u0445\u043E\u0434\u0438\u0442.</p>'
+  },
+  2: {
+    title: '\u041F\u043E\u0447\u0435\u043C\u0443 \u043A\u0443\u0445\u043D\u044F \u0438\u0437 \u043C\u0430\u0441\u0441\u0438\u0432\u0430 \u2014 \u044D\u0442\u043E \u0432\u044B\u0433\u043E\u0434\u043D\u043E \u043D\u0430 20 \u043B\u0435\u0442',
+    date: '2 \u0430\u043F\u0440\u0435\u043B\u044F 2026',
+    content: '<p>\u041C\u043D\u043E\u0433\u0438\u0435 \u0441\u0447\u0438\u0442\u0430\u044E\u0442, \u0447\u0442\u043E \u043A\u0443\u0445\u043D\u044F \u0438\u0437 \u043D\u0430\u0442\u0443\u0440\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u0434\u0435\u0440\u0435\u0432\u0430 \u2014 \u044D\u0442\u043E \u0434\u043E\u0440\u043E\u0433\u043E \u0438 \u043D\u0435\u043E\u043F\u0440\u0430\u0432\u0434\u0430\u043D\u043D\u043E. \u0414\u0430\u0432\u0430\u0439\u0442\u0435 \u043F\u043E\u0441\u0447\u0438\u0442\u0430\u0435\u043C \u0440\u0435\u0430\u043B\u044C\u043D\u0443\u044E \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C \u0432\u043B\u0430\u0434\u0435\u043D\u0438\u044F.</p><h3>\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B</h3><p>\u041A\u0443\u0445\u043D\u044F \u0438\u0437 \u041C\u0414\u0424 \u0438\u043B\u0438 \u041B\u0414\u0421\u041F \u0441\u043B\u0443\u0436\u0438\u0442 \u0432 \u0441\u0440\u0435\u0434\u043D\u0435\u043C 5\u20138 \u043B\u0435\u0442. \u041A\u0443\u0445\u043D\u044F \u0438\u0437 \u043C\u0430\u0441\u0441\u0438\u0432\u0430 \u0434\u0443\u0431\u0430 \u0438\u043B\u0438 \u044F\u0441\u0435\u043D\u044F \u0441\u043B\u0443\u0436\u0438\u0442 20\u201330 \u043B\u0435\u0442 \u0431\u0435\u0437 \u043F\u043E\u0442\u0435\u0440\u0438 \u0432\u043D\u0435\u0448\u043D\u0435\u0433\u043E \u0432\u0438\u0434\u0430.</p><h3>\u0420\u0435\u043C\u043E\u043D\u0442\u043E\u043F\u0440\u0438\u0433\u043E\u0434\u043D\u043E\u0441\u0442\u044C</h3><p>\u041C\u0430\u0441\u0441\u0438\u0432 \u043C\u043E\u0436\u043D\u043E \u0440\u0435\u0441\u0442\u0430\u0432\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C: \u043E\u0442\u0448\u043B\u0438\u0444\u043E\u0432\u0430\u0442\u044C, \u0437\u0430\u0442\u043E\u043D\u0438\u0440\u043E\u0432\u0430\u0442\u044C, \u043F\u043E\u043A\u0440\u044B\u0442\u044C \u043D\u043E\u0432\u044B\u043C \u043B\u0430\u043A\u043E\u043C. \u041C\u0414\u0424 \u0438 \u041B\u0414\u0421\u041F \u0440\u0435\u043C\u043E\u043D\u0442\u0443 \u043D\u0435 \u043F\u043E\u0434\u043B\u0435\u0436\u0430\u0442.</p><h3>\u042D\u043A\u043E\u043B\u043E\u0433\u0438\u0447\u043D\u043E\u0441\u0442\u044C</h3><p>\u041D\u0430\u0442\u0443\u0440\u0430\u043B\u044C\u043D\u043E\u0435 \u0434\u0435\u0440\u0435\u0432\u043E \u2014 \u044D\u0442\u043E \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E. \u041D\u0438\u043A\u0430\u043A\u0438\u0445 \u0444\u043E\u0440\u043C\u0430\u043B\u044C\u0434\u0435\u0433\u0438\u0434\u043D\u044B\u0445 \u0441\u043C\u043E\u043B, \u043D\u0438\u043A\u0430\u043A\u0438\u0445 \u0438\u0441\u043F\u0430\u0440\u0435\u043D\u0438\u0439.</p><h3>\u0421\u0440\u0430\u0432\u043D\u0435\u043D\u0438\u0435 \u0437\u0430 20 \u043B\u0435\u0442</h3><p>\u041A\u0443\u0445\u043D\u044F \u0438\u0437 \u041C\u0414\u0424 \u0441\u0440\u0435\u0434\u043D\u0435\u0433\u043E \u0441\u0435\u0433\u043C\u0435\u043D\u0442\u0430: 150 000 \u20BD \u00D7 3 \u0437\u0430\u043C\u0435\u043D\u044B = 450 000 \u20BD. \u041A\u0443\u0445\u043D\u044F \u0438\u0437 \u043C\u0430\u0441\u0441\u0438\u0432\u0430 \u043F\u0440\u0435\u043C\u0438\u0443\u043C: 350 000 \u20BD \u00D7 1 \u0440\u0430\u0437 = 350 000 \u20BD. \u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u043E\u0447\u0435\u0432\u0438\u0434\u043D\u0430.</p><p>\u0412 \u043D\u0430\u0448\u0435\u0439 \u043C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u043E\u0439 \u043C\u044B \u0434\u0435\u043B\u0430\u0435\u043C \u043A\u0443\u0445\u043D\u0438 \u0438\u0437 \u043C\u0430\u0441\u0441\u0438\u0432\u0430 \u0434\u0443\u0431\u0430 \u0438 \u044F\u0441\u0435\u043D\u044F \u043F\u043E\u0434 \u0437\u0430\u043A\u0430\u0437. \u0418\u043D\u0434\u0438\u0432\u0438\u0434\u0443\u0430\u043B\u044C\u043D\u044B\u0439 \u043F\u0440\u043E\u0435\u043A\u0442, \u0430\u0432\u0441\u0442\u0440\u0438\u0439\u0441\u043A\u0430\u044F \u0444\u0443\u0440\u043D\u0438\u0442\u0443\u0440\u0430, \u043D\u0430\u0442\u0443\u0440\u0430\u043B\u044C\u043D\u044B\u0439 \u043A\u0430\u043C\u0435\u043D\u044C.</p>'
+  },
+  3: {
+    title: '\u041A\u0430\u043A \u043C\u044B \u0441\u043E\u0431\u043B\u044E\u0434\u0430\u0435\u043C \u0441\u0440\u043E\u043A\u0438: \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0441\u0442\u0432\u043E \u0438 \u043B\u043E\u0433\u0438\u0441\u0442\u0438\u043A\u0430',
+    date: '20 \u043C\u0430\u0440\u0442\u0430 2026',
+    content: '<p>\u00AB\u041C\u0435\u0431\u0435\u043B\u044C \u0441\u0434\u0435\u043B\u0430\u044E\u0442 \u0447\u0435\u0440\u0435\u0437 \u043C\u0435\u0441\u044F\u0446\u00BB \u2014 \u0444\u0440\u0430\u0437\u0430, \u043A\u043E\u0442\u043E\u0440\u0430\u044F \u0447\u0430\u0441\u0442\u043E \u0437\u0432\u0443\u0447\u0438\u0442 \u043A\u0430\u043A \u043F\u0440\u0438\u0433\u043E\u0432\u043E\u0440. \u0412 \u043D\u0430\u0448\u0435\u0439 \u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0435 90% \u0437\u0430\u043A\u0430\u0437\u043E\u0432 \u0433\u043E\u0442\u043E\u0432\u044B \u0442\u043E\u0447\u043D\u043E \u0432 \u0441\u0440\u043E\u043A.</p><h3>\u042D\u0442\u0430\u043F 1: \u0417\u0430\u043C\u0435\u0440 \u0438 \u043F\u0440\u043E\u0435\u043A\u0442</h3><p>\u041F\u043E\u0441\u043B\u0435 \u0437\u0430\u044F\u0432\u043A\u0438 \u0432\u044B\u0435\u0437\u0436\u0430\u0435\u043C \u043D\u0430 \u043E\u0431\u044A\u0435\u043A\u0442 \u0432 \u0442\u0435\u0447\u0435\u043D\u0438\u0435 2 \u0434\u043D\u0435\u0439. \u0427\u0435\u0440\u0435\u0437 1\u20132 \u0434\u043D\u044F \u0433\u043E\u0442\u043E\u0432 \u0434\u0438\u0437\u0430\u0439\u043D-\u043F\u0440\u043E\u0435\u043A\u0442 \u0438 \u0441\u043C\u0435\u0442\u0430.</p><h3>\u042D\u0442\u0430\u043F 2: \u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0435 \u0438 \u0437\u0430\u043F\u0443\u0441\u043A</h3><p>\u041F\u043E\u0441\u043B\u0435 \u0443\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F \u043F\u0440\u043E\u0435\u043A\u0442\u0430 \u0437\u0430\u044F\u0432\u043A\u0430 \u0443\u0445\u043E\u0434\u0438\u0442 \u0432 \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0441\u0442\u0432\u043E. \u0412\u0441\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u043F\u0440\u043E\u0432\u0435\u0440\u0435\u043D\u044B \u0438 \u0437\u0430\u0440\u0435\u0437\u0435\u0440\u0432\u0438\u0440\u043E\u0432\u0430\u043D\u044B \u0437\u0430\u0440\u0430\u043D\u0435\u0435.</p><h3>\u042D\u0442\u0430\u043F 3: \u041F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0441\u0442\u0432\u043E</h3><p>\u0421\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u043E\u0435 \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0441\u0442\u0432\u043E \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u0435\u0442 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043A\u0430\u0436\u0434\u044B\u0439 \u044D\u0442\u0430\u043F. \u041A\u0430\u0436\u0434\u0443\u044E \u043D\u0435\u0434\u0435\u043B\u044E \u043A\u043B\u0438\u0435\u043D\u0442 \u043F\u043E\u043B\u0443\u0447\u0430\u0435\u0442 \u0444\u043E\u0442\u043E\u043E\u0442\u0447\u0451\u0442 \u043E \u0445\u043E\u0434\u0435 \u0440\u0430\u0431\u043E\u0442.</p><h3>\u042D\u0442\u0430\u043F 4: \u0414\u043E\u0441\u0442\u0430\u0432\u043A\u0430 \u0438 \u0441\u0431\u043E\u0440\u043A\u0430</h3><p>\u0428\u0442\u0430\u0442\u043D\u044B\u0435 \u0441\u0431\u043E\u0440\u0449\u0438\u043A\u0438 (\u043D\u0435 \u043D\u0430\u0451\u043C\u043D\u044B\u0435 \u0431\u0440\u0438\u0433\u0430\u0434\u044B) \u043F\u0440\u0438\u0435\u0437\u0436\u0430\u044E\u0442 \u0441\u0442\u0440\u043E\u0433\u043E \u043F\u043E \u0433\u0440\u0430\u0444\u0438\u043A\u0443.</p><p>\u0425\u043E\u0442\u0438\u0442\u0435 \u043C\u0435\u0431\u0435\u043B\u044C \u0431\u0435\u0437 \u043D\u0435\u0440\u0432\u043E\u0442\u0440\u0451\u043F\u043A\u0438? \u0417\u0430\u043F\u0438\u0448\u0438\u0442\u0435\u0441\u044C \u043D\u0430 \u0437\u0430\u043C\u0435\u0440, \u0438 \u043C\u044B \u043F\u043E\u043A\u0430\u0436\u0435\u043C, \u043A\u0430\u043A \u0434\u043E\u043B\u0436\u043D\u043E \u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C.</p>'
+  }
 };
 
 function openBlogArticle(id) {
-    const article = blogArticles[id];
-    if (!article) return;
-
-    const modal = document.getElementById('blogModal');
-    const content = document.getElementById('blogModalContent');
-    if (!modal || !content) return;
-
-    content.innerHTML = `
-        <div style="color: var(--color-text-muted); font-size: 13px; margin-bottom: 8px;">${article.date}</div>
-        <h2>${article.title}</h2>
-        ${article.content}
-        <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--color-border); text-align: center;">
-            <a href="#form-section" class="btn btn--primary" style="text-decoration: none;" onclick="document.getElementById('blogModal').classList.remove('open'); document.body.style.overflow = '';">Заказать бесплатный замер</a>
-        </div>
-    `;
-
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
+  var article = blogArticles[id];
+  if (!article) return;
+  var modal = document.getElementById('blogModal');
+  var modalContent = document.getElementById('blogModalContent');
+  if (!modal || !modalContent) return;
+  modalContent.innerHTML = '<div style="color: var(--muted); font-size: 13px; margin-bottom: 8px;">' + article.date + '</div><h2>' + article.title + '</h2>' + article.content + '<div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center;"><a href="#form-section" class="btn btn--primary" style="text-decoration: none;" onclick="document.getElementById(\'blogModal\').classList.remove(\'open\'); document.body.style.overflow = \'\';">\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0439 \u0437\u0430\u043C\u0435\u0440</a></div>';
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
 function closeBlogModal() {
-    const modal = document.getElementById('blogModal');
-    if (modal) {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-    }
+  var modal = document.getElementById('blogModal');
+  if (modal) { modal.classList.remove('open'); document.body.style.overflow = ''; }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    applySettings();
-    applyHero();
+document.addEventListener('DOMContentLoaded', function () {
+  applySettings();
+  applyHero();
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeBlogModal();
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeBlogModal(); });
+
+  var modalOverlay = document.getElementById('blogModalOverlay');
+  var modalClose = document.getElementById('blogModalClose');
+  if (modalOverlay) modalOverlay.addEventListener('click', closeBlogModal);
+  if (modalClose) modalClose.addEventListener('click', closeBlogModal);
+
+  var blogBtns = document.querySelectorAll('.blog-card__btn');
+  for (var b = 0; b < blogBtns.length; b++) {
+    blogBtns[b].addEventListener('click', function () {
+      var id = parseInt(this.dataset.article);
+      openBlogArticle(id);
     });
+  }
 
-    const leadForm = document.getElementById('leadForm');
-    if (leadForm) {
-        leadForm.addEventListener('submit', handleFormSubmit);
-    }
-
-    const packageBtns = document.querySelectorAll('.package-card__btn');
-    packageBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const formSection = document.getElementById('form-section');
-            if (formSection) {
-                formSection.scrollIntoView({ behavior: 'smooth' });
-            }
-            showNotification(
-                'Вы выбрали пакет!',
-                'Отличный выбор! Заполните форму для замера, и мы подберём оптимальные решения по выбранному пакету.'
-            );
-        });
+  var leadForm = document.getElementById('leadForm');
+  if (leadForm) {
+    leadForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      showNotification('\u0417\u0430\u043F\u0438\u0441\u044C \u043F\u043E \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0443', '\u041F\u043E\u0437\u0432\u043E\u043D\u0438\u0442\u0435 \u043D\u0430\u043C \u043F\u043E \u043D\u043E\u043C\u0435\u0440\u0443 <b>+7 (920) 141-30-56</b>, \u0438 \u043C\u044B \u0437\u0430\u043F\u0438\u0448\u0435\u043C \u0432\u0430\u0441 \u043D\u0430 \u0437\u0430\u043C\u0435\u0440 \u0432 \u0443\u0434\u043E\u0431\u043D\u043E\u0435 \u0432\u0440\u0435\u043C\u044F.');
     });
+  }
 
-    const blogBtns = document.querySelectorAll('.blog-card__btn');
-    blogBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const id = parseInt(btn.dataset.article);
-            openBlogArticle(id);
-        });
+  var packageBtns = document.querySelectorAll('.package-card__btn');
+  for (var p = 0; p < packageBtns.length; p++) {
+    packageBtns[p].addEventListener('click', function () {
+      var formSection = document.getElementById('form-section');
+      if (formSection) formSection.scrollIntoView({ behavior: 'smooth' });
+      showNotification('\u0412\u044B \u0432\u044B\u0431\u0440\u0430\u043B\u0438 \u043F\u0430\u043A\u0435\u0442!', '\u041E\u0442\u043B\u0438\u0447\u043D\u044B\u0439 \u0432\u044B\u0431\u043E\u0440! \u0417\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u0444\u043E\u0440\u043C\u0443 \u0434\u043B\u044F \u0437\u0430\u043C\u0435\u0440\u0430, \u0438 \u043C\u044B \u043F\u043E\u0434\u0431\u0435\u0440\u0451\u043C \u043E\u043F\u0442\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u044F \u043F\u043E \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u043C\u0443 \u043F\u0430\u043A\u0435\u0442\u0443.');
     });
+  }
 
-    const blogModalOverlay = document.getElementById('blogModalOverlay');
-    if (blogModalOverlay) {
-        blogModalOverlay.addEventListener('click', closeBlogModal);
-    }
-
-    const blogModalClose = document.getElementById('blogModalClose');
-    if (blogModalClose) {
-        blogModalClose.addEventListener('click', closeBlogModal);
-    }
-
-    setMinDate();
+  var dateInput = document.getElementById('formDate');
+  if (dateInput) {
+    var today = new Date();
+    var yyyy = today.getFullYear();
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var dd = String(today.getDate()).padStart(2, '0');
+    dateInput.min = yyyy + '-' + mm + '-' + dd;
+  }
 });
-
-function setMinDate() {
-    const dateInput = document.getElementById('formDate');
-    if (!dateInput) return;
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    dateInput.min = `${yyyy}-${mm}-${dd}`;
-}
