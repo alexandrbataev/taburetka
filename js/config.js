@@ -1,2 +1,0 @@
-const BOT_TOKEN = '8463656511:AAHWn3ovij2Idg4kqm-frZZSHGYX2rCdPOg';
-const CHAT_ID = '471092820';
