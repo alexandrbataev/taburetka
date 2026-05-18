@@ -81,6 +81,12 @@ a { text-decoration: none; color: inherit; }
   margin-right: auto;
 }
 
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 .header__top {
   background: var(--fg);
   color: var(--accent);
