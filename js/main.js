@@ -96,16 +96,17 @@ async function handleFormSubmit(e) {
     submitBtn.disabled = true;
 
     try {
-        const msg = `Новая заявка на замер 📏
+        const msg = `Новая заявка на замер 📏\nИмя: ${name}\nТелефон: ${phone}\nДата: ${date}`;
 
-Имя: ${name}
-Телефон: ${phone}
-Дата: ${date}`;
+        const formData = new FormData();
+        formData.append('chat_id', CHAT_ID);
+        formData.append('text', msg);
 
-        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`;
-
-        const img = new Image();
-        img.src = url;
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+        });
 
         showNotification(
             'Спасибо за заявку!',
