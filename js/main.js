@@ -80,7 +80,9 @@ function showNotification(title, text) {
     }, 8000);
 }
 
-function handleFormSubmit(e) {
+
+
+async function handleFormSubmit(e) {
     e.preventDefault();
     const form = e.target;
     const name = form.querySelector('#formName').value.trim();
@@ -93,15 +95,38 @@ function handleFormSubmit(e) {
     submitBtn.textContent = 'Отправляем...';
     submitBtn.disabled = true;
 
-    setTimeout(() => {
+    try {
+        const msg = `Новая заявка на замер 📏
+
+Имя: ${name}
+Телефон: ${phone}
+Дата: ${date}`;
+
+        const res = await fetch(
+            `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: msg }),
+            }
+        );
+
+        if (!res.ok) throw new Error('Telegram error');
+
         showNotification(
             'Спасибо за заявку!',
             `${name}, мы получили вашу заявку на замер ${date}. Наш менеджер свяжется с вами в ближайшее время.<br><br>📋 Чек-лист «Что спросить у замерщика»:<br>1. Уточните стоимость доставки<br>2. Спросите про подготовку стен<br>3. Узнайте сроки изготовления<br>4. Обсудите варианты оплаты`
         );
+        form.reset();
+    } catch {
+        showNotification(
+            'Ошибка',
+            'Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.'
+        );
+    } finally {
         submitBtn.textContent = 'Записаться на замер';
         submitBtn.disabled = false;
-        form.reset();
-    }, 1500);
+    }
 }
 
 const blogArticles = {
