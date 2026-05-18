@@ -1,17 +1,921 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Табуретка — Мебель для вашего дома</title>
+  <link rel="icon" href="https://taburetka-rybinsk.ru/images/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --bg: oklch(98% 0.002 240);
+      --surface: oklch(100% 0 0);
+      --fg: oklch(18% 0.015 250);
+      --muted: oklch(50% 0.01 250);
+      --border: oklch(88% 0.005 250);
+      --accent: oklch(68% 0.13 85);
+      --accent-muted: oklch(68% 0.13 85 / 0.12);
+      --bg-alt: oklch(96.5% 0.003 240);
+      --font-display: 'Tenor Sans', Georgia, 'Iowan Old Style', 'Charter', serif;
+
+      --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+      --radius: 6px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--fg);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---- buttons ---- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border: none;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: all 0.2s;
+    }
+
+    .btn--primary {
+      background: var(--accent);
+      color: var(--fg);
+    }
+    .btn--primary:hover { background: oklch(68% 0.16 85); }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--fg);
+      border: 2px solid var(--fg);
+    }
+    .btn--outline:hover { background: var(--fg); color: var(--bg); }
+
+    /* ---- section titles ---- */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1.3;
+      letter-spacing: 0.04em;
+    }
+    .section-title--center { text-align: center; }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: var(--muted);
+      margin-top: -8px;
+      margin-bottom: 56px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ================================================================
+       HEADER
+    ================================================================ */
+    .header__top {
+      background: var(--fg);
+      color: var(--accent);
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .header__top-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header__info-links {
+      display: flex;
+      gap: 24px;
+    }
+    .header__link {
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .header__link:hover { color: #fff; }
+
+    .header__schedule {
+      font-size: 12px;
+      color: oklch(68% 0.13 85 / 0.7);
+      letter-spacing: 0.03em;
+    }
+
+    .header__main {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+
+    .header__main-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header__logo-img {
+      width: 44px; height: 44px;
+      border-radius: var(--radius);
+    }
+
+    .header__contacts {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header__phone {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+    .header__phone:hover { color: var(--accent); }
+
+    /* ================================================================
+       HERO
+    ================================================================ */
+    .hero {
+      padding: 80px 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero__inner {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .hero__content { flex: 1; }
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: 0.03em;
+      margin-bottom: 16px;
+    }
+
+    .hero__subtitle {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+
+    .hero__buttons { display: flex; gap: 12px; margin-bottom: 48px; }
+
+    .hero__stats {
+      display: flex;
+      gap: 48px;
+    }
+    .hero__stat { display: flex; flex-direction: column; }
+    .hero__stat-value {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .hero__stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .hero__image {
+      flex-shrink: 0;
+      width: 480px;
+      height: 420px;
+    }
+    .hero__image-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    /* ================================================================
+       PACKAGES
+    ================================================================ */
+    .packages {
+      padding: 80px 0;
+      background: var(--bg-alt);
+    }
+
+    .packages__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .package-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .package-card:hover { border-color: var(--accent); }
+
+    .package-card--featured {
+      border: 2px solid var(--accent);
+    }
+
+    .package-card__badge {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--fg);
+      padding: 4px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+
+    .package-card__title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .package-card__price {
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .package-card__desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .package-card__list {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 24px;
+    }
+    .package-card__list li {
+      padding: 6px 0 6px 22px;
+      font-size: 14px;
+      position: relative;
+      line-height: 1.5;
+      color: var(--fg);
+    }
+    .package-card__list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .package-card__btn { width: 100%; }
+
+    /* ================================================================
+       WHY US
+    ================================================================ */
+    .why-us {
+      padding: 80px 0;
+      background: var(--surface);
+    }
+
+    .why-us__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .why-us__card {
+      text-align: center;
+      padding: 40px 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.2s;
+    }
+    .why-us__card:hover { border-color: var(--accent); }
+
+    .why-us__icon {
+      width: 56px; height: 56px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: var(--accent-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .why-us__icon svg { width: 28px; height: 28px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .why-us__title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .why-us__text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ================================================================
+       WORKS
+    ================================================================ */
+    .works {
+      padding: 80px 0;
+      background: var(--bg-alt);
+    }
+
+    .works__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .work-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .work-card:hover { border-color: var(--accent); }
+
+    .work-card__image {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--bg-alt);
+    }
+    .work-card__img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .work-card__info {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .work-card__title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .work-card__meta {
+      display: flex;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .work-card__meta-item { font-weight: 600; color: var(--accent); }
+
+    /* ================================================================
+       REVIEWS
+    ================================================================ */
+    .reviews {
+      padding: 80px 0;
+      background: var(--surface);
+    }
+
+    .reviews__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .review-card {
+      text-align: center;
+      padding: 40px 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .review-card__video {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .review-card__placeholder {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--accent-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .review-card__placeholder:hover { background: var(--accent); }
+    .review-card__placeholder svg { width: 32px; height: 32px; fill: var(--accent); }
+
+    .review-card__author {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .review-card__text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* ================================================================
+       BLOG
+    ================================================================ */
+    .blog {
+      padding: 80px 0;
+      background: var(--bg-alt);
+    }
+
+    .blog__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .blog-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s;
+    }
+    .blog-card:hover { border-color: var(--accent); }
+
+    .blog-card__image {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: var(--bg-alt);
+    }
+    .blog-card__img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .blog-card__content {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-card__date {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .blog-card__title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .blog-card__excerpt {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    .blog-card__btn {
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      cursor: pointer;
+      padding: 0;
+      text-align: left;
+      transition: color 0.2s;
+    }
+    .blog-card__btn:hover { color: var(--fg); }
+
+    /* ---- Blog modal ---- */
+    .blog-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+    }
+    .blog-modal.open { display: block; }
+
+    .blog-modal__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+    }
+
+    .blog-modal__panel {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 680px;
+      max-width: calc(100vw - 48px);
+      max-height: calc(100vh - 80px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    .blog-modal__close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: none; border: none;
+      font-size: 22px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .blog-modal__close:hover { color: var(--fg); }
+
+    .blog-modal__content h2 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+    .blog-modal__content h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      margin-top: 28px;
+      margin-bottom: 10px;
+    }
+    .blog-modal__content p {
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+    .blog-modal__content ul { padding-left: 20px; margin-bottom: 14px; }
+    .blog-modal__content li { font-size: 15px; line-height: 1.7; margin-bottom: 4px; }
+
+    /* ================================================================
+       FORM SECTION
+    ================================================================ */
+    .form-section {
+      padding: 80px 0;
+      background: var(--fg);
+      color: #fff;
+    }
+
+    .form-section__inner {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .form-section__info { flex: 1; }
+
+    .form-section__title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .form-section__text {
+      font-size: 16px;
+      color: oklch(75% 0.01 250);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .form-section__benefits {
+      list-style: none;
+    }
+    .form-section__benefits li {
+      padding: 8px 0 8px 28px;
+      font-size: 15px;
+      position: relative;
+    }
+    .form-section__benefits li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .form {
+      flex: 1;
+      max-width: 440px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+    }
+
+    .form__group { margin-bottom: 20px; }
+
+    .form__label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .form__input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--fg);
+      background: var(--bg);
+      transition: border-color 0.2s;
+    }
+    .form__input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form__submit { width: 100%; padding: 14px; font-size: 16px; margin-bottom: 12px; }
+
+    .form__note {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ================================================================
+       FOOTER
+    ================================================================ */
+    .footer {
+      background: var(--fg);
+      color: oklch(70% 0.01 250);
+      padding: 56px 0 24px;
+    }
+
+    .footer__inner {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+    }
+
+    .footer__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .footer__logo-img {
+      width: 36px; height: 36px;
+      border-radius: var(--radius);
+    }
+    .footer__logo-text-wrap { display: flex; flex-direction: column; }
+    .footer__logo-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      letter-spacing: 0.03em;
+    }
+    .footer__logo-sub {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .footer__desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: oklch(70% 0.01 250);
+      margin-bottom: 20px;
+    }
+
+    .footer__socials { display: flex; gap: 10px; }
+    .footer__social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border: 1px solid oklch(50% 0.01 250);
+      border-radius: var(--radius);
+      color: oklch(75% 0.01 250);
+      transition: all 0.2s;
+    }
+    .footer__social svg { width: 16px; height: 16px; fill: currentColor; }
+    .footer__social:hover { border-color: var(--accent); color: var(--accent); }
+
+    .footer__title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .footer__link {
+      display: block;
+      font-size: 14px;
+      padding: 4px 0;
+      transition: color 0.2s;
+    }
+    .footer__link:hover { color: var(--accent); }
+
+    .footer__phone {
+      display: block;
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .footer__email {
+      display: block;
+      font-size: 14px;
+      color: oklch(70% 0.01 250);
+      margin-bottom: 12px;
+    }
+    .footer__address, .footer__schedule {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .footer__bottom {
+      border-top: 1px solid oklch(35% 0.01 250);
+      padding-top: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: oklch(50% 0.01 250);
+    }
+
+    /* ================================================================
+       NOTIFICATION
+    ================================================================ */
+    .notification {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--fg);
+      color: #fff;
+      padding: 20px 24px;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      z-index: 3000;
+      max-width: 380px;
+      transform: translateY(120px);
+      opacity: 0;
+      transition: all 0.35s ease;
+    }
+    .notification.show { transform: translateY(0); opacity: 1; }
+    .notification__title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--accent);
+    }
+    .notification__text {
+      font-size: 14px;
+      color: oklch(75% 0.01 250);
+      line-height: 1.5;
+    }
+    .notification__close {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: none; border: none;
+      color: oklch(50% 0.01 250);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 2px;
+      line-height: 1;
+    }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 1024px) {
+      .header__info-links { display: none; }
+      .hero__inner { flex-direction: column; text-align: center; }
+      .hero__subtitle { margin-left: auto; margin-right: auto; }
+      .hero__buttons { justify-content: center; }
+      .hero__stats { justify-content: center; }
+      .hero__image { width: 100%; max-width: 480px; height: 320px; }
+      .hero__title { font-size: 38px; }
+
+      .form-section__inner { flex-direction: column; gap: 32px; }
+      .form { max-width: 100%; width: 100%; }
+
+      .packages__grid { grid-template-columns: repeat(2, 1fr); }
+      .why-us__grid { grid-template-columns: repeat(2, 1fr); }
+      .works__grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews__grid { grid-template-columns: repeat(2, 1fr); }
+      .blog__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; }
+      .header__contacts { display: none; }
+
+      .hero { padding: 48px 0; }
+      .hero__title { font-size: 30px; }
+      .hero__image { height: 240px; }
+
+      .section-title { font-size: 28px; }
+      .section-subtitle { font-size: 15px; margin-bottom: 40px; }
+
+      .packages, .why-us, .works, .reviews, .blog, .form-section { padding: 56px 0; }
+      .packages__grid { grid-template-columns: 1fr; gap: 16px; }
+      .why-us__grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .works__grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .reviews__grid { grid-template-columns: 1fr; }
+      .blog__grid { grid-template-columns: 1fr; }
+
+      .footer__inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+      .form-section__title { font-size: 28px; }
+      .form { padding: 24px 20px; }
+
+      .blog-modal__panel { padding: 24px 20px; max-height: 90vh; width: calc(100% - 32px); }
+    }
+
+    @media (max-width: 480px) {
+      .hero__buttons { flex-direction: column; align-items: center; }
+      .hero__stats { flex-direction: column; gap: 16px; align-items: center; }
+      .footer__inner { grid-template-columns: 1fr; }
+      .works__grid { grid-template-columns: 1fr; }
+      .why-us__grid { grid-template-columns: 1fr; }
+      .notification { left: 16px; right: 16px; bottom: 16px; max-width: none; }
+      .form { padding: 20px 16px; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- ==============================================================
+       HEADER
+  ============================================================== -->
   <header class="header">
     <div class="header__top">
       <div class="container header__top-inner">
@@ -29,7 +933,7 @@
     <div class="header__main">
       <div class="container header__main-inner">
         <a href="/" class="header__logo">
-          <img src="images/logo.jpg" alt="Табуретка" class="header__logo-img" width="44" height="44">
+          <img src="https://taburetka-rybinsk.ru/images/logo.jpg" alt="Табуретка" class="header__logo-img" width="44" height="44">
         </a>
         <div class="header__contacts">
           <a href="tel:+79201413056" class="header__phone">+7 (920) 141-30-56</a>
@@ -38,6 +942,9 @@
     </div>
   </header>
 
+  <!-- ==============================================================
+       HERO
+  ============================================================== -->
   <section class="hero">
     <div class="container">
       <div class="hero__inner">
@@ -64,12 +971,15 @@
           </div>
         </div>
         <div class="hero__image">
-          <img src="images/main.jpg" alt="Мебель для вашего дома" class="hero__image-img">
+          <img src="https://taburetka-rybinsk.ru/images/main.jpg" alt="Мебель для вашего дома" class="hero__image-img">
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ==============================================================
+       PACKAGES
+  ============================================================== -->
   <section class="packages" id="packages">
     <div class="container">
       <h2 class="section-title section-title--center">Пакетные решения</h2>
@@ -127,6 +1037,9 @@
     </div>
   </section>
 
+  <!-- ==============================================================
+       WHY US
+  ============================================================== -->
   <section class="why-us" id="why-us">
     <div class="container">
       <h2 class="section-title section-title--center">Почему мы</h2>
@@ -164,6 +1077,9 @@
     </div>
   </section>
 
+  <!-- ==============================================================
+       WORKS
+  ============================================================== -->
   <section class="works" id="works">
     <div class="container">
       <h2 class="section-title section-title--center">Наши работы</h2>
@@ -171,72 +1087,78 @@
       <div class="works__grid">
         <div class="work-card">
           <div class="work-card__image">
-            <img src="images/кухня в хрущевке.jpg" alt="Кухня в хрущёвке" class="work-card__img" loading="lazy">
+            <img src="https://taburetka-rybinsk.ru/images/%D0%BA%D1%83%D1%85%D0%BD%D1%8F%20%D0%B2%20%D1%85%D1%80%D1%83%D1%89%D0%B5%D0%B2%D0%BA%D0%B5.jpg" alt="Кухня в хрущёвке" class="work-card__img" loading="lazy">
           </div>
           <div class="work-card__info">
             <h3 class="work-card__title">Кухня в хрущёвке</h3>
             <div class="work-card__meta">
               <span class="work-card__meta-item">115 000 ₽</span>
+              <span class="work-card__meta-item">|</span>
               <span class="work-card__meta-item">10 дней</span>
             </div>
           </div>
         </div>
         <div class="work-card">
           <div class="work-card__image">
-            <img src="images/гостиная в скандинавском стиле.jpg" alt="Гостиная в скандинавском стиле" class="work-card__img" loading="lazy">
+            <img src="https://taburetka-rybinsk.ru/images/%D0%B3%D0%BE%D1%81%D1%82%D0%B8%D0%BD%D0%B0%D1%8F%20%D0%B2%20%D1%81%D0%BA%D0%B0%D0%BD%D0%B4%D0%B8%D0%BD%D0%B0%D0%B2%D1%81%D0%BA%D0%BE%D0%BC%20%D1%81%D1%82%D0%B8%D0%BB%D0%B5.jpg" alt="Гостиная в скандинавском стиле" class="work-card__img" loading="lazy">
           </div>
           <div class="work-card__info">
             <h3 class="work-card__title">Гостиная в скандинавском стиле</h3>
             <div class="work-card__meta">
               <span class="work-card__meta-item">320 000 ₽</span>
+              <span class="work-card__meta-item">|</span>
               <span class="work-card__meta-item">14 дней</span>
             </div>
           </div>
         </div>
         <div class="work-card">
           <div class="work-card__image">
-            <img src="images/спальня с гардеробной.jpg" alt="Спальня с гардеробной" class="work-card__img" loading="lazy">
+            <img src="https://taburetka-rybinsk.ru/images/%D1%81%D0%BF%D0%B0%D0%BB%D1%8C%D0%BD%D1%8F%20%D1%81%20%D0%B3%D0%B0%D1%80%D0%B4%D0%B5%D1%80%D0%BE%D0%B1%D0%BD%D0%BE%D0%B9.jpg" alt="Спальня с гардеробной" class="work-card__img" loading="lazy">
           </div>
           <div class="work-card__info">
             <h3 class="work-card__title">Спальня с гардеробной</h3>
             <div class="work-card__meta">
               <span class="work-card__meta-item">280 000 ₽</span>
+              <span class="work-card__meta-item">|</span>
               <span class="work-card__meta-item">12 дней</span>
             </div>
           </div>
         </div>
         <div class="work-card">
           <div class="work-card__image">
-            <img src="images/кухня из массива дуба.jpg" alt="Кухня из массива дуба" class="work-card__img" loading="lazy">
+            <img src="https://taburetka-rybinsk.ru/images/%D0%BA%D1%83%D1%85%D0%BD%D1%8F%20%D0%B8%D0%B7%20%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B0%20%D0%B4%D1%83%D0%B1%D0%B0.jpg" alt="Кухня из массива дуба" class="work-card__img" loading="lazy">
           </div>
           <div class="work-card__info">
             <h3 class="work-card__title">Кухня из массива дуба</h3>
             <div class="work-card__meta">
               <span class="work-card__meta-item">340 000 ₽</span>
+              <span class="work-card__meta-item">|</span>
               <span class="work-card__meta-item">35 дней</span>
             </div>
           </div>
         </div>
         <div class="work-card">
           <div class="work-card__image">
-            <img src="images/студия 25м2.jpg" alt="Меблировка студии 25 м²" class="work-card__img" loading="lazy">
+            <img src="https://taburetka-rybinsk.ru/images/%D1%81%D1%82%D1%83%D0%B4%D0%B8%D1%8F%2025%D0%BC2.jpg" alt="Меблировка студии 25 м²" class="work-card__img" loading="lazy">
           </div>
           <div class="work-card__info">
             <h3 class="work-card__title">Меблировка студии 25 м²</h3>
             <div class="work-card__meta">
               <span class="work-card__meta-item">270 000 ₽</span>
+              <span class="work-card__meta-item">|</span>
               <span class="work-card__meta-item">10 дней</span>
             </div>
           </div>
         </div>
         <div class="work-card">
           <div class="work-card__image">
-            <img src="images/детская комната.webp" alt="Детская комната" class="work-card__img" loading="lazy">
+            <img src="https://taburetka-rybinsk.ru/images/%D0%B4%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BA%D0%BE%D0%BC%D0%BD%D0%B0%D1%82%D0%B0.webp" alt="Детская комната" class="work-card__img" loading="lazy">
           </div>
           <div class="work-card__info">
             <h3 class="work-card__title">Детская комната</h3>
             <div class="work-card__meta">
               <span class="work-card__meta-item">130 000 ₽</span>
+              <span class="work-card__meta-item">|</span>
               <span class="work-card__meta-item">8 дней</span>
             </div>
           </div>
@@ -245,6 +1167,9 @@
     </div>
   </section>
 
+  <!-- ==============================================================
+       REVIEWS
+  ============================================================== -->
   <section class="reviews" id="reviews">
     <div class="container">
       <h2 class="section-title section-title--center">Отзывы</h2>
@@ -281,6 +1206,9 @@
     </div>
   </section>
 
+  <!-- ==============================================================
+       BLOG
+  ============================================================== -->
   <section class="blog" id="blog">
     <div class="container">
       <h2 class="section-title section-title--center">Полезные статьи</h2>
@@ -288,7 +1216,7 @@
       <div class="blog__grid">
         <article class="blog-card">
           <div class="blog-card__image">
-            <img src="images/5 ошибок при мебелеровке студии.jpg" alt="5 ошибок при меблировке студии" class="blog-card__img" loading="lazy">
+            <img src="https://taburetka-rybinsk.ru/images/5%20%D0%BE%D1%88%D0%B8%D0%B1%D0%BE%D0%BA%20%D0%BF%D1%80%D0%B8%20%D0%BC%D0%B5%D0%B1%D0%B5%D0%BB%D0%B5%D1%80%D0%BE%D0%B2%D0%BA%D0%B5%20%D1%81%D1%82%D1%83%D0%B4%D0%B8%D0%B8.jpg" alt="5 ошибок при меблировке студии" class="blog-card__img" loading="lazy">
           </div>
           <div class="blog-card__content">
             <div class="blog-card__date">15 апреля 2026</div>
@@ -299,7 +1227,7 @@
         </article>
         <article class="blog-card">
           <div class="blog-card__image">
-            <img src="images/кухня из массива это выгодно.jpeg" alt="Кухня из массива — выгодно на 20 лет" class="blog-card__img" loading="lazy">
+            <img src="https://taburetka-rybinsk.ru/images/%D0%BA%D1%83%D1%85%D0%BD%D1%8F%20%D0%B8%D0%B7%20%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B0%20%D1%8D%D1%82%D0%BE%20%D0%B2%D1%8B%D0%B3%D0%BE%D0%B4%D0%BD%D0%BE.jpeg" alt="Кухня из массива — выгодно на 20 лет" class="blog-card__img" loading="lazy">
           </div>
           <div class="blog-card__content">
             <div class="blog-card__date">2 апреля 2026</div>
@@ -310,7 +1238,7 @@
         </article>
         <article class="blog-card">
           <div class="blog-card__image">
-            <img src="images/как мы соблюдаем сроки производство и логистика.webp" alt="Как мы соблюдаем сроки" class="blog-card__img" loading="lazy">
+            <img src="https://taburetka-rybinsk.ru/images/%D0%BA%D0%B0%D0%BA%20%D0%BC%D1%8B%20%D1%81%D0%BE%D0%B1%D0%BB%D1%8E%D0%B4%D0%B0%D0%B5%D0%BC%20%D1%81%D1%80%D0%BE%D0%BA%D0%B8%20%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE%20%D0%B8%20%D0%BB%D0%BE%D0%B3%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0.webp" alt="Как мы соблюдаем сроки" class="blog-card__img" loading="lazy">
           </div>
           <div class="blog-card__content">
             <div class="blog-card__date">20 марта 2026</div>
@@ -323,6 +1251,7 @@
     </div>
   </section>
 
+  <!-- Blog modal -->
   <div class="blog-modal" id="blogModal">
     <div class="blog-modal__overlay" id="blogModalOverlay"></div>
     <div class="blog-modal__panel">
@@ -331,6 +1260,9 @@
     </div>
   </div>
 
+  <!-- ==============================================================
+       FORM SECTION
+  ============================================================== -->
   <section class="form-section" id="form-section">
     <div class="container">
       <div class="form-section__inner">
@@ -363,12 +1295,15 @@
     </div>
   </section>
 
+  <!-- ==============================================================
+       FOOTER
+  ============================================================== -->
   <footer class="footer" id="contacts">
     <div class="container">
       <div class="footer__inner">
         <div class="footer__about">
           <a href="/" class="footer__logo">
-            <img src="images/logo.jpg" alt="Табуретка" class="footer__logo-img" width="36" height="36">
+            <img src="https://taburetka-rybinsk.ru/images/logo.jpg" alt="Табуретка" class="footer__logo-img" width="36" height="36">
             <span class="footer__logo-text-wrap">
               <span class="footer__logo-name">ТАБУРЕТКА</span>
               <span class="footer__logo-sub">магазин мебели</span>
@@ -411,12 +1346,116 @@
     </div>
   </footer>
 
+  <!-- Notification toast -->
   <div class="notification" id="notification">
     <button class="notification__close" id="notificationClose" aria-label="Закрыть">✕</button>
     <div class="notification__title" id="notificationTitle"></div>
     <div class="notification__text" id="notificationText"></div>
   </div>
 
-  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      var blogArticles = {
+        1: {
+          title: '5 ошибок при меблировке студии',
+          date: '15 апреля 2026',
+          content: '<p>Обустройство студии — задача посложнее, чем меблировка обычной квартиры. Здесь каждый квадратный метр на счету, и одна неверная покупка может превратить уютное пространство в захламлённую клетушку. Разберём пять самых частых ошибок.</p><h3>1. Покупка громоздкой мебели</h3><p>Соблазн поставить полноценный диван и огромный шкаф велик, но в студии такой подход крадёт 30% полезной площади. Выход: трансформеры, откидные кровати, модульные системы.</p><h3>2. Отсутствие зонирования</h3><p>Студия — это одна комната, выполняющая роль гостиной, спальни и кухни одновременно. Без чёткого зонирования пространство выглядит хаотичным. Используйте стеллажи, раздвижные перегородки, разные покрытия пола и освещение.</p><h3>3. Экономия на хранении</h3><p>В студии критически важна каждая система хранения. Недостаток шкафов и полок быстро приводит к тому, что вещи начинают лежать на виду, создавая визуальный шум.</p><h3>4. Неправильное освещение</h3><p>Одна люстра по центру потолка — худшее решение для студии. Нужна многоуровневая система: общий свет, локальный (торшеры, бра) и рабочая подсветка кухонной зоны.</p><h3>5. Игнорирование вертикального пространства</h3><p>Полки под потолком, высокие шкафы, настенные крючки — используйте стены. Это освободит пол и создаст ощущение простора.</p><p>Хотите избежать этих ошибок? Закажите бесплатный замер — наш дизайнер приедет, сделает проект студии с учётом всех нюансов и подберёт мебель, которая действительно подходит.</p>'
+        },
+        2: {
+          title: 'Почему кухня из массива — это выгодно на 20 лет',
+          date: '2 апреля 2026',
+          content: '<p>Многие считают, что кухня из натурального дерева — это дорого и неоправданно. Давайте посчитаем реальную стоимость владения.</p><h3>Срок службы</h3><p>Кухня из МДФ или ЛДСП служит в среднем 5–8 лет. Кухня из массива дуба или ясеня служит 20–30 лет без потери внешнего вида.</p><h3>Ремонтопригодность</h3><p>Массив можно реставрировать: отшлифовать, затонировать, покрыть новым лаком. МДФ и ЛДСП ремонту не подлежат.</p><h3>Экологичность</h3><p>Натуральное дерево — это безопасно. Никаких формальдегидных смол, никаких испарений.</p><h3>Сравнение за 20 лет</h3><p>Кухня из МДФ среднего сегмента: 150 000 ₽ × 3 замены = 450 000 ₽. Кухня из массива премиум: 350 000 ₽ × 1 раз = 350 000 ₽. Экономия очевидна.</p><p>В нашей мастерской мы делаем кухни из массива дуба и ясеня под заказ. Индивидуальный проект, австрийская фурнитура, натуральный камень.</p>'
+        },
+        3: {
+          title: 'Как мы соблюдаем сроки: производство и логистика',
+          date: '20 марта 2026',
+          content: '<p>«Мебель сделают через месяц» — фраза, которая часто звучит как приговор. В нашей практике 90% заказов готовы точно в срок.</p><h3>Этап 1: Замер и проект</h3><p>После заявки выезжаем на объект в течение 2 дней. Через 1–2 дня готов дизайн-проект и смета.</p><h3>Этап 2: Подтверждение и запуск</h3><p>После утверждения проекта заявка уходит в производство. Все материалы проверены и зарезервированы заранее.</p><h3>Этап 3: Производство</h3><p>Собственное производство позволяет контролировать каждый этап. Каждую неделю клиент получает фотоотчёт о ходе работ.</p><h3>Этап 4: Доставка и сборка</h3><p>Штатные сборщики (не наёмные бригады) приезжают строго по графику.</p><p>Хотите мебель без нервотрёпки? Запишитесь на замер, и мы покажем, как должно работать.</p>'
+        }
+      };
+
+      var modal = document.getElementById('blogModal');
+      var modalContent = document.getElementById('blogModalContent');
+      var modalOverlay = document.getElementById('blogModalOverlay');
+      var modalClose = document.getElementById('blogModalClose');
+
+      function closeBlogModal() {
+        if (modal) { modal.classList.remove('open'); document.body.style.overflow = ''; }
+      }
+
+      function openBlogArticle(id) {
+        var article = blogArticles[id];
+        if (!article || !modal || !modalContent) return;
+        modalContent.innerHTML = '<div style="color: var(--muted); font-size: 13px; margin-bottom: 8px;">' + article.date + '</div><h2>' + article.title + '</h2>' + article.content + '<div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center;"><a href="#form-section" class="btn btn--primary" style="text-decoration: none;" onclick="document.getElementById(\'blogModal\').classList.remove(\'open\'); document.body.style.overflow = \'\';">Заказать бесплатный замер</a></div>';
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      if (modalOverlay) modalOverlay.addEventListener('click', closeBlogModal);
+      if (modalClose) modalClose.addEventListener('click', closeBlogModal);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeBlogModal(); });
+
+      var blogBtns = document.querySelectorAll('.blog-card__btn');
+      for (var b = 0; b < blogBtns.length; b++) {
+        blogBtns[b].addEventListener('click', function () {
+          var id = parseInt(this.dataset.article);
+          openBlogArticle(id);
+        });
+      }
+
+      // ---- Notification ----
+      var notif = document.getElementById('notification');
+      var notifTitle = document.getElementById('notificationTitle');
+      var notifText = document.getElementById('notificationText');
+      var notifClose = document.getElementById('notificationClose');
+      var notifTimer = null;
+
+      function showNotification(title, text) {
+        if (notifTitle) notifTitle.textContent = title;
+        if (notifText) notifText.innerHTML = text;
+        if (notif) notif.classList.add('show');
+        if (notifTimer) clearTimeout(notifTimer);
+        notifTimer = setTimeout(function () {
+          if (notif) notif.classList.remove('show');
+        }, 8000);
+      }
+
+      if (notifClose) {
+        notifClose.addEventListener('click', function () {
+          if (notif) notif.classList.remove('show');
+          if (notifTimer) clearTimeout(notifTimer);
+        });
+      }
+
+      // ---- Form ----
+      var leadForm = document.getElementById('leadForm');
+      if (leadForm) {
+        leadForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          showNotification('Запись по телефону', 'Позвоните нам по номеру <b>+7 (920) 141-30-56</b>, и мы запишем вас на замер в удобное время.');
+        });
+      }
+
+      // ---- Package buttons ----
+      var packageBtns = document.querySelectorAll('.package-card__btn');
+      for (var p = 0; p < packageBtns.length; p++) {
+        packageBtns[p].addEventListener('click', function () {
+          var formSection = document.getElementById('form-section');
+          if (formSection) formSection.scrollIntoView({ behavior: 'smooth' });
+          showNotification('Вы выбрали пакет!', 'Отличный выбор! Заполните форму для замера, и мы подберём оптимальные решения по выбранному пакету.');
+        });
+      }
+
+      // ---- Date min ----
+      var dateInput = document.getElementById('formDate');
+      if (dateInput) {
+        var today = new Date();
+        var yyyy = today.getFullYear();
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var dd = String(today.getDate()).padStart(2, '0');
+        dateInput.min = yyyy + '-' + mm + '-' + dd;
+      }
+    })();
+  </script>
+
 </body>
 </html>
