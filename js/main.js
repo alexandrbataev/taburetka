@@ -102,16 +102,10 @@ async function handleFormSubmit(e) {
 Телефон: ${phone}
 Дата: ${date}`;
 
-        const res = await fetch(
-            `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: msg }),
-            }
-        );
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`;
 
-        if (!res.ok) throw new Error('Telegram error');
+        const img = new Image();
+        img.src = url;
 
         showNotification(
             'Спасибо за заявку!',
